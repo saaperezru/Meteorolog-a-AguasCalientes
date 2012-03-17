@@ -1,0 +1,50 @@
+body {
+    font-family: 'Didact Gothic', sans-serif;
+    font-size: 11pt;
+    background-color: #F2F2F2;
+    margin: 0px;
+    padding: 0px;
+}
+
+body > div {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    padding: 30px;
+}
+
+h1, th {
+    font-weight: normal;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border: solid 1px #CCCCCC;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+td {
+    padding: 10px;
+}
+
+thead tr {
+    background-color: #EEEEEE;
+}
+
+tbody tr:nth-child(2n) {
+    background-color: #F2F2F2;
+}
+
+input[type=text] {
+    width: 90%;
+    font-family: 'Didact Gothic', sans-serif;
+    padding: 5px 8px;
+    border: solid 1px #CCCCCC;
+}
+
+select {
+    width: 90%;
+}
