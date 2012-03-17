@@ -1,4 +1,18 @@
+<%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
+<%@page import="org.meteorologaaguascalientes.control.measure.MeasuresList"%>
+<%@page import="org.meteorologaaguascalientes.dao.VariableDao"%>
+<%@page import="org.meteorologaaguascalientes.dao.Dao"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.logging.Logger"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Properties"%>
+<%@page import="org.meteorologaaguascalientes.dao.DaoList"%>
+<%
+    Properties prop = new Properties();
+    prop.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
+    List<Dao> daoList = DaoList.getDao();
+    List<VariableDao> variableList = DaoList.getVariables();
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,29 +39,34 @@
                     <thead>
                         <tr>
                             <th>&nbsp;</th>
-                            <th>Tiempo (dd/MM/yyyy hh:mm:ss aa)</th>
-                            <th>Temperatura [ºC]</th>
-                            <th>Presión atmosférica [kPa]</th>
-                            <th>Pluviosidad [l/m<sup>2</sup>]</th>
+                            <%
+                                for (Dao dao : daoList) {
+                            %>
+                            <th><%= prop.getProperty("dao." + dao.getVisibleName())%> [<%= prop.getProperty("dao." + dao.getVisibleName() + ".extra")%>]</th>
+                            <%}%>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Último valor</td>
-                            <td id="last-value-ts">-</td>
-                            <td id="last-value-t">-</td>
-                            <td id="last-value-ap">-</td>
-                            <td id="last-value-p">-</td>
+                            <%
+                                for (Dao dao : daoList) {
+                            %>
+                            <td id="<%= dao.getVisibleName()%>LastValue">-</td>
+                            <%}%>
                         </tr>
                         <tr>
                             <td>Nuevo valor</td>
-                            <td><input type="text" name="timestamp" required="required" title="Tiempo de la muestra en formato dd/MM/yyyy hh:mm:ss aa, como 28/01/2012 10:45:14 AM"/></td>
-                            <td><input type="text" name="temperature" required="required" title="Temperatura en grados centígrados"/></td>
-                            <td><input type="text" name="atmosphericPressure" required="required" title="Presión atmosférica en kilopascales"/></td>
-                            <td><input type="text" name="pluviosity" required="required" title="Pluviosidad en litros sobre metro cuadrado" /></td>
+                            <%
+                                for (Dao dao : daoList) {
+                            %>
+                            <td>        
+                                <input type="text" name="<%= dao.getVisibleName()%>" required="required" />
+                            </td>
+                            <%}%>
                         </tr>
                         <tr>
-                            <td colspan="5" style="text-align: right;"><input type="submit" value="Enviar"/></td>
+                            <td colspan="<%= daoList.size() + 1%>" style="text-align: right;"><input type="submit" value="Enviar"/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -60,9 +79,12 @@
                 </ul>
                 <div id="tab-1">
                     <div id="variable">
-                        <input type="radio" id="variable-t" name="variable" checked="checked"><label for="variable-t">Temperatura</label></input>
-                        <input type="radio" id="variable-ap" name="variable"><label for="variable-ap">Presión atmosférica</label></input>
-                        <input type="radio" id="variable-p" name="variable"><label for="variable-p">Pluviosidad</label></input>
+                        <%
+                            for (VariableDao dao : variableList) {
+                        %>
+                        <input type="radio" name="variable" id="variable<%= dao.getVisibleName()%>"><label for="variable<%= dao.getVisibleName()%>"><%= prop.getProperty("dao." + dao.getVisibleName())%></label></input>
+                        <%        }
+                        %>
                     </div>
                 </div>
                 <div id="tab-2">
@@ -70,39 +92,63 @@
                         <thead>
                             <tr>
                                 <th>Medida</th>
-                                <th>Temperatura [ºC]</th>
-                                <th>Presión atmosférica [kPa]</th>
-                                <th>Pluviosidad [l/m<sup>2</sup>]</th>
+                                <%
+                                    for (VariableDao dao : variableList) {
+                                %>
+                                <th><%= prop.getProperty("dao." + dao.getVisibleName())%> [<%= prop.getProperty("dao." + dao.getVisibleName() + ".extra")%>]</th>
+                                <%        }
+                                %>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <select id="central-tendency-measure">
+                                    <select id="centralTendency">
                                         <option value=""></option>
-                                        <option value="mean">Media</option>
-                                        <option value="median">Mediana</option>
-                                        <option value="mode">Moda</option>
+                                        <%
+                                            for (Measure measure : MeasuresList.getCentralTendencyMeasures()) {
+                                                String name = measure.getClass().getSimpleName();
+                                                name = name.substring(0, 1).toLowerCase() + name.substring(1);
+
+                                        %>
+                                        <option value="<%=name%>"><%= prop.getProperty("measure." + name)%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
                                 </td>
-                                <td id="report-ct-temperature">-</td>
-                                <td id="report-ct-atmosphericPressure">-</td>
-                                <td id="report-ct-pluviosity">-</td>
+                        <div id="variable">
+                            <%
+                                for (VariableDao dao : variableList) {
+                            %>
+                            <td id="<%= dao.getVisibleName()%>CentralTendency">-</td>
+                            <%        }
+                            %>
                             </tr>
                             <tr>
                                 <td>
-                                    <select id="spread-measure">
+                                    <select id="spread">
                                         <option value=""></option>
-                                        <option value="standardDeviation">Desviación estándar</option>
-                                        <option value="variance">Varianza</option>
-                                        <option value="interquartileRange">Rango intercuartílico</option>
+                                        <%
+                                            for (Measure measure : MeasuresList.getSpreadMeasures()) {
+                                                String name = measure.getClass().getSimpleName();
+                                                name = name.substring(0, 1).toLowerCase() + name.substring(1);
+
+                                        %>
+                                        <option value="<%=name%>"><%= prop.getProperty("measure." + name)%></option>
+                                        <%
+                                            }
+                                        %>
                                     </select>
                                 </td>
-                                <td id="report-s-temperature">-</td>
-                                <td id="report-s-atmosphericPressure">-</td>
-                                <td id="report-s-pluviosity">-</td>
+                                <%
+                                    for (VariableDao dao : variableList) {
+                                %>
+                                <td id="<%= dao.getVisibleName()%>Spread">-</td>
+                                <%        }
+                                %>
                             </tr>
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
