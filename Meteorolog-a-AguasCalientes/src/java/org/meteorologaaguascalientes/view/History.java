@@ -43,7 +43,7 @@ public class History extends HttpServlet {
                         SortedMap<Date, Double> data;
                         /*
                          * HistoryControl invocation HistoryControl
-                         * historyControl = new HistoryControl();
+                         * HistoryControl historyControl = new HistoryControl();
                          * dataList = historyControl.getData(entry.getValue());
                          */
                         dataList = new ArrayList<SortedMap<Date, Double>>();

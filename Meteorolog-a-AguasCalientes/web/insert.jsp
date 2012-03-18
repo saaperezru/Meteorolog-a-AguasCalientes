@@ -1,3 +1,4 @@
+<%@page import="java.util.Map.Entry"%>
 <%@page import="org.meteorologaaguascalientes.dao.DaoList"%>
 <%@page import="org.meteorologaaguascalientes.dao.Dao"%>
 <%@page import="java.util.*"%>
@@ -8,10 +9,10 @@
 <%
     Map<Dao, String> values = new HashMap<Dao, String>();
     String value;
-    for (Dao dao : DaoList.getDao()) {
-        value = request.getParameter(dao.getVisibleName());
+    for (Entry<String,Dao> entry : DaoList.getInstance().getDaoMap().entrySet()) {
+        value = request.getParameter(entry.getKey());
         if (value != null) {
-            values.put(dao, value);
+            values.put(entry.getValue(), value);
         }
     }
 %>
