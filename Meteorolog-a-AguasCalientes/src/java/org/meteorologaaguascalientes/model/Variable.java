@@ -1,4 +1,4 @@
-package org.meteorologaaguascalientes.Model;
+package org.meteorologaaguascalientes.model;
 
 import java.util.Date;
 

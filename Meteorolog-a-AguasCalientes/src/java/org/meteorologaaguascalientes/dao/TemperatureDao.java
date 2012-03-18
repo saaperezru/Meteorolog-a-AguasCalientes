@@ -14,7 +14,7 @@ public class TemperatureDao extends AbstractVariableDao<Temperature> {
 	@Override
 	public void createRecord(Temperature record) {
 		boolean add = data.add(record);
-		if (lastRecord == null || (lastRecord.getSample().getTimeStamp().compareTo(record.getSample().getTimeStamp())>0)){
+		if (lastRecord == null || (lastRecord.getTime().compareTo(record.getTime()))>0){
 			lastRecord = record;
 		}
 	}

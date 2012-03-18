@@ -1,4 +1,4 @@
-package org.meteorologaaguascalientes.Model;
+package org.meteorologaaguascalientes.model;
 /**
  *
  * @author Diego Gerena (SNIPERCAT) <dagerenaq@gmail.com>
