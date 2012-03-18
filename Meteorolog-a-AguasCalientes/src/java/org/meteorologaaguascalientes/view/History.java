@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Map.Entry;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.meteorologaaguascalientes.dao.DaoList;
 import org.meteorologaaguascalientes.dao.AbstractVariableDao;
+import org.meteorologaaguascalientes.dao.Dao;
+import org.meteorologaaguascalientes.dao.DaoList;
 
 @WebServlet(name = "History", urlPatterns = {"/history"})
 public class History extends HttpServlet {
@@ -35,14 +37,15 @@ public class History extends HttpServlet {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             String variableName = request.getParameter("variable");
             if (variableName != null) {
-                for (AbstractVariableDao variableDao : DaoList.getVariables()) {
-                    if (variableDao.getVisibleName().equals(variableName)) {
+                
+                for (Entry<String,AbstractVariableDao> entry : DaoList.getInstance().getVariablesDaoMap().entrySet()) {
+                    if (entry.getKey().equals(variableName)) {
                         List<SortedMap<Date, Double>> dataList;
                         SortedMap<Date, Double> data;
                         /*
                          * HistoryControl invocation HistoryControl
-                         * historyControl = new HistoryControl(); data =
-                         * dataList = historyControl.getData(variableDao);
+                         * historyControl = new HistoryControl();
+                         * dataList = historyControl.getData(entry.getValue());
                          */
                         dataList = new ArrayList<SortedMap<Date, Double>>();
                         data = new TreeMap<Date, Double>();
@@ -67,14 +70,14 @@ public class History extends HttpServlet {
                         out.println(prop.getProperty("date") + "," + prop.getProperty("dao." + variableName) + "," + prop.getProperty("forecast"));
 
                         data = dataList.get(0);
-                        for (Map.Entry<Date, Double> entry : data.entrySet()) {
-                            out.println(formatter.format(entry.getKey())
-                                    + "," + entry.getValue() + ",");
+                        for (Map.Entry<Date, Double> e : data.entrySet()) {
+                            out.println(formatter.format(e.getKey())
+                                    + "," + e.getValue() + ",");
                         }
                         data = dataList.get(1);
-                        for (Map.Entry<Date, Double> entry : data.entrySet()) {
-                            out.println(formatter.format(entry.getKey())
-                                    + ",," + entry.getValue());
+                        for (Map.Entry<Date, Double> e : data.entrySet()) {
+                            out.println(formatter.format(e.getKey())
+                                    + ",," + e.getValue());
                         }
 
                         return;
