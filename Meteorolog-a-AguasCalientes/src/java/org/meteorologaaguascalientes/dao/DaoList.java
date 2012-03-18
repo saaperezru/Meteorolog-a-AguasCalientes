@@ -15,6 +15,7 @@ import org.meteorologaaguascalientes.model.Sample;
  */
 public class DaoList {
 
+    
     private HashMap<String, Dao> daoList = new HashMap<String, Dao>();
     private HashMap<String, AbstractVariableDao> variablesDao = new HashMap<String, AbstractVariableDao>();
     private static DaoList instance;
@@ -55,6 +56,7 @@ public class DaoList {
     public static List<AbstractVariableDao> getVariables() {
         return new ArrayList<AbstractVariableDao>(DaoList.getInstance().getVariablesDaoMap().values());
     }
+    
 
     public synchronized static DaoList getInstance() {
 

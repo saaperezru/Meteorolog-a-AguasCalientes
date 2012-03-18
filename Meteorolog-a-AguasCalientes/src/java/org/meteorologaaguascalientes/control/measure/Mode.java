@@ -4,9 +4,11 @@
  */
 package org.meteorologaaguascalientes.control.measure;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.meteorologaaguascalientes.model.Variable;
 
 /**
  *
@@ -15,16 +17,15 @@ import java.util.Map;
 public class Mode implements Measure{
 
     @Override
-    public double calculate(double[] data) {
-        if(data.length == 0)
+    public double calculate(ArrayList<Variable> data) {
+        if(data.isEmpty())
             return -1;
-    
         Map<Double,Integer> counter=new HashMap<Double, Integer>();
-        for(int i = 0; i< data.length; i++)
-            if(counter.containsKey(data[i]))
-                counter.put(data[i], counter.get(data[i])+1);
+        for(int i = 0; i< data.size(); i++)
+            if(counter.containsKey(data.get(i).getValue()))
+                counter.put(data.get(i).getValue(), counter.get(data.get(i).getValue())+1);
             else
-                counter.put(data[i], 1);
+                counter.put(data.get(i).getValue(), 1);
         Iterator it = counter.keySet().iterator();
         double mode = (Double)it.next();
         int amount = counter.get(mode);
@@ -41,6 +42,7 @@ public class Mode implements Measure{
             }
         }
         return mode;
+        
     }
     
 }
