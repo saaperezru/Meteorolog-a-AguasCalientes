@@ -4,12 +4,12 @@
  */
 package org.meteorologaaguascalientes.control.forecast;
 
-import java.util.List;
+import java.util.SortedMap;
 
 /**
  *
  * @author juan
  */
 public interface Forecast {
-    public List<Double> forecast(int numberOfPoints, List<Double> actualPoints);
+    public SortedMap<Long, Double> forecast(int numberOfPoints, SortedMap<Long, Double> actualPoints);
 }
