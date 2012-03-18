@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.meteorologaaguascalientes.control;
+package org.meteorologaaguascalientes.control.historic;
 
 import java.util.*;
 import org.meteorologaaguascalientes.control.forecast.DefaultForecastImpl;
