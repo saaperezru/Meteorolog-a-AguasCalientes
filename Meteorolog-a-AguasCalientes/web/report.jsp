@@ -6,24 +6,15 @@
 <%@page import="java.util.*"%>
 <%@taglib uri="http://www.atg.com/taglibs/json" prefix="json" %>
 <%@page contentType="text/json" pageEncoding="UTF-8"%>
-<%!    Map<AbstractVariableDao, Double> report;
-
-    private Measure findMeasure(String measureName, List<Measure> measures) {
-        for (Measure m : measures) {
-            if (m.getClass().getSimpleName().equals(measureName)) {
-                return m;
-            }
-        }
-        return null;
-    }
+<%!    Map<String, Double> report;
 %>
 <%
     String measureName = request.getParameter("measure");
     if (measureName != null) {
-        measureName = measureName.substring(0, 1).toUpperCase() + measureName.substring(1);
-        Measure measure = findMeasure(measureName, MeasuresList.getCentralTendencyMeasures());
+        MeasuresList measuresList = MeasuresList.getInstance();
+        Measure measure = measuresList.getCentralTendencyMeasure(measureName);
         if (measure == null) {
-            measure = findMeasure(measureName, MeasuresList.getSpreadMeasures());
+            measure = measuresList.getSpreadMeasure(measureName);
         }
         if (measure != null) {
 %>
@@ -33,15 +24,15 @@
     report = reportsControl.getReport(measure);
 --%>
 <%
-    report = new HashMap<AbstractVariableDao, Double>();
+    report = new HashMap<String, Double>();
     List<AbstractVariableDao> daoList = DaoList.getVariables();
-    report.put(daoList.get(0), Math.random());
-    report.put(daoList.get(1), Math.random());
-    report.put(daoList.get(2), Math.random());
+    report.put("temperature", Math.random());
+    report.put("atmosphericPressure", Math.random());
+    report.put("pluviosity", Math.random());
 %>
 <json:array var="entry" items="<%= report.entrySet()%>">
     <json:object>
-        <json:property name="name" value="${entry.getKey().getVisibleName()}"/>
+        <json:property name="name" value="${entry.getKey()}"/>
         <json:property name="value" value="${entry.getValue()}"/>
     </json:object>
 </json:array>
