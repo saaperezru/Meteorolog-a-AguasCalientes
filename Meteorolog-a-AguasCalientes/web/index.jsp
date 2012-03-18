@@ -26,7 +26,7 @@
         <script type="text/javascript" src="js/dygraph-combined.js"></script>
         <script type="text/javascript">
             jQuery(document).ready(function(){
-                var g = new Dygraph(document.getElementById("dygraph"), "history?variable=temperature", {animatedZooms: true});
+                var g = new Dygraph(document.getElementById("dygraph"), "", {animatedZooms: true});
                 jQuery("input:submit").button();
                 jQuery("#tabs").tabs();
                 jQuery("#variable").buttonset();
@@ -34,14 +34,40 @@
                     var j = jQuery(this);
                     g.updateOptions({file: "history?variable=" + j.val()});
                 });
-                
+                jQuery("#variable input[type=radio]:first").click();
+                var f = jQuery("#insertForm");
+                f.submit(function(){
+                    jQuery.post(f.attr("action"), f.serialize(), function(data){
+                        var m = jQuery("#message");
+                        m.removeClass("success");
+                        m.removeClass("error");
+                        if(data.success){
+                            m.html("Inserción exitosa");
+                            m.addClass("success");
+                            getLastValues();
+                        } else {
+                            m.html("Error en la inserción");
+                            m.addClass("error");
+                        }
+                    });
+                    return false;
+                });
+                getLastValues();
             });
+            
+            function getLastValues() {
+                jQuery.get("lastValues.jsp", function(data){
+                    for(var i in data){
+                        jQuery("#" + data[i].name + "LastValue").html(data[i].value);
+                    }
+                });
+            }
         </script>
     </head>
     <body>
         <div style="width: 80%; margin-left: auto; margin-right: auto;">
             <h1>Central Meteorológica Aguas Calientes</h1>
-            <form action="insert.jsp" method="post">
+            <form id="insertForm" action="insert.jsp" method="post">
                 <table class="main-table">
                     <thead>
                         <tr>
@@ -73,7 +99,8 @@
                             <%}%>
                         </tr>
                         <tr>
-                            <td colspan="<%= daoList.size() + 1%>" style="text-align: right;"><input type="submit" value="Enviar"/></td>
+                            <td colspan="<%= daoList.size()%>" id="message" style="text-align: right;"></td>
+                            <td style="text-align: right;"><input type="submit" value="Enviar"/></td>
                         </tr>
                     </tbody>
                 </table>

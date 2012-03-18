@@ -54,3 +54,11 @@ select {
     height: 400px;
     margin: 20px auto;
 }
+
+#message.success {
+    color: green;
+}
+
+#message.error {
+    color: red;
+}
