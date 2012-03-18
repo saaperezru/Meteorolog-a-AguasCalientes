@@ -11,7 +11,7 @@ import org.meteorologaaguascalientes.model.Sample;
  *
  * @author tuareg
  */
-public class SampleDao implements Dao<Sample>{
+public class SampleDao extends Dao<Sample>{
 
 	private ArrayList<Sample> samples = new ArrayList<Sample>();
 

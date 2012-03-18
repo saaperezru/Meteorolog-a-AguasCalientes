@@ -11,19 +11,12 @@ import org.meteorologaaguascalientes.model.Variable;
  *
  * @author tuareg
  */
-public abstract class AbstractVariableDao<E> implements Dao<E>{
+public abstract class AbstractVariableDao<E> extends Dao<E>{
 
-	private String visibleName;
 	protected ArrayList<E>  data = new ArrayList<E>();
 	protected E lastRecord;
 
-	public void setVisibleName(String visibleName) {
-		this.visibleName = visibleName;
-	}
-
-	public String getVisibleName(){
-		return visibleName;
-	}
+	
 
 	public E getLastValue() {
 		return lastRecord;

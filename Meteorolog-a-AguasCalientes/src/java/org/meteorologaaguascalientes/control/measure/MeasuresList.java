@@ -44,14 +44,20 @@ public class MeasuresList {
         return spreadMeasures.get(key);
     }
     
-    public ArrayList<Measure> getCentralTendencyMeasures() {
+    public static ArrayList<Measure> getCentralTendencyMeasures() {
+        return MeasuresList.getInstance().centralTendencyMeasuresList();
+    }
+    public ArrayList<Measure> centralTendencyMeasuresList() {
         ArrayList<Measure> list = new ArrayList<Measure>();
         for(Object measure : centralTendencyMeasures.values().toArray())
            list.add((Measure)measure);
         return list;
     }
 
-    public ArrayList<Measure> getSpreadMeasures() {
+    public static ArrayList<Measure> getSpreadMeasures() {
+        return MeasuresList.getInstance().spreadMeasuresList();
+    }
+    public ArrayList<Measure> spreadMeasuresList() {
         ArrayList<Measure> list = new ArrayList<Measure>();
         for(Object measure : spreadMeasures.values().toArray())
            list.add((Measure)measure);
