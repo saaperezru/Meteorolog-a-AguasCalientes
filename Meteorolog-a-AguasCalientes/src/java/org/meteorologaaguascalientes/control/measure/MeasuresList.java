@@ -6,6 +6,7 @@ package org.meteorologaaguascalientes.control.measure;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -19,13 +20,20 @@ public class MeasuresList {
 
     private MeasuresList() {
         centralTendencyMeasures = new HashMap();
-        centralTendencyMeasures.put("mean", new Mean());
-        centralTendencyMeasures.put("median", new Median());
-        centralTendencyMeasures.put("mode", new Mode());
+        Mean mean = new Mean();
+        centralTendencyMeasures.put(mean.getClass().getSimpleName(), mean);
+        Median median = new Median();
+        centralTendencyMeasures.put(median.getClass().getSimpleName(), median);
+        Mode mode = new Mode();
+        centralTendencyMeasures.put(mode.getClass().getSimpleName(), mode);
+        
         spreadMeasures = new HashMap();
-        spreadMeasures.put("variance", new Variance());
-        spreadMeasures.put("standardDeviation", new StandardDeviation());
-        spreadMeasures.put("interquartileRange", new InterquartileRange());
+        Variance variance = new Variance();
+        spreadMeasures.put(variance.getClass().getSimpleName(), variance);
+        StandardDeviation standardDeviation = new StandardDeviation();
+        spreadMeasures.put(standardDeviation.getClass().getSimpleName(),standardDeviation);
+        InterquartileRange interquartileRange = new InterquartileRange();
+        spreadMeasures.put(interquartileRange.getClass().getSimpleName(), interquartileRange );
     }
 
     public static MeasuresList getInstance() {
@@ -43,28 +51,20 @@ public class MeasuresList {
         return spreadMeasures.get(key);
     }
 
-    public static ArrayList<Measure> getCentralTendencyMeasures() {
+    public static List<Measure> getCentralTendencyMeasures() {
         return MeasuresList.getInstance().centralTendencyMeasuresList();
     }
 
-    public ArrayList<Measure> centralTendencyMeasuresList() {
-        ArrayList<Measure> list = new ArrayList<Measure>();
-        for (Object measure : centralTendencyMeasures.values().toArray()) {
-            list.add((Measure) measure);
-        }
-        return list;
+    private ArrayList<Measure> centralTendencyMeasuresList() {
+        return new ArrayList<Measure>(centralTendencyMeasures.values());
     }
 
-    public static ArrayList<Measure> getSpreadMeasures() {
+    public static List<Measure> getSpreadMeasures() {
         return MeasuresList.getInstance().spreadMeasuresList();
     }
 
-    public ArrayList<Measure> spreadMeasuresList() {
-        ArrayList<Measure> list = new ArrayList<Measure>();
-        for (Object measure : spreadMeasures.values().toArray()) {
-            list.add((Measure) measure);
-        }
-        return list;
+    private List<Measure> spreadMeasuresList() {
+        return new ArrayList<Measure>(spreadMeasures.values());
     }
 
     public ArrayList<String> getCentralTendencyMeasuresKeys() {

@@ -4,6 +4,9 @@
  */
 package org.meteorologaaguascalientes.control.measure;
 
+import java.util.ArrayList;
+import org.meteorologaaguascalientes.model.Variable;
+
 /**
  *
  * @author josebermeo
@@ -11,14 +14,13 @@ package org.meteorologaaguascalientes.control.measure;
 public class Mean implements Measure{
 
     @Override
-    public double calculate(double [] data) {
-        if(data.length == 0)
+    public double calculate(ArrayList<Variable> data) {
+        if(data.isEmpty())
             return -1;
-        
         double mean = 0;
-        for(int i = 0; i<data.length; i++)
-            mean += data[i];
-        return mean/data.length;
+        for(int i = 0; i<data.size(); i++)
+            mean += data.get(i).getValue();
+        return mean/data.size();
     }
     
 }

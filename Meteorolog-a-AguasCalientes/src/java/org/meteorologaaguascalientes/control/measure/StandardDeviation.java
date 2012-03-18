@@ -4,6 +4,9 @@
  */
 package org.meteorologaaguascalientes.control.measure;
 
+import java.util.ArrayList;
+import org.meteorologaaguascalientes.model.Variable;
+
 /**
  *
  * @author josebermeo
@@ -11,8 +14,8 @@ package org.meteorologaaguascalientes.control.measure;
 public class StandardDeviation implements Measure{
 
     @Override
-    public double calculate(double[] data) {
-        if(data.length == 0)
+    public double calculate(ArrayList<Variable> data) {
+        if(data.isEmpty())
             return -1;
         double variance = (new Variance()).calculate(data);
         return Math.sqrt(variance);
