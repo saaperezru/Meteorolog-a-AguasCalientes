@@ -34,7 +34,7 @@
     <body>
         <div style="width: 80%; margin-left: auto; margin-right: auto;">
             <h1>Central Meteorológica Aguas Calientes</h1>
-            <form action="" method="post">
+            <form action="insert.jsp" method="post">
                 <table class="main-table">
                     <thead>
                         <tr>
