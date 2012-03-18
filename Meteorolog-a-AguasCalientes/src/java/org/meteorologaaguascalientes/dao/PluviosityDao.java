@@ -4,10 +4,7 @@
  */
 package org.meteorologaaguascalientes.dao;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.meteorologaaguascalientes.model.Pluviosity;
-import org.meteorologaaguascalientes.model.Variable;
 
 /**
  *

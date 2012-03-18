@@ -9,7 +9,7 @@ import java.util.Date;
 public class Sample {
     private Date timestamp;
     
-    Sample(Date timestamp){
+    public Sample(Date timestamp){
         this.timestamp = timestamp;
     }
     

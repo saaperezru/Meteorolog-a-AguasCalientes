@@ -10,11 +10,11 @@ package org.meteorologaaguascalientes.model;
  */
 public class AtmosphericPressure extends Variable {
 
-    AtmosphericPressure(double value){
+    public AtmosphericPressure(double value){
         super.setValue(value);
     }
 
-    AtmosphericPressure(){
+    public AtmosphericPressure(){
         super.setValue(0);
     }
 

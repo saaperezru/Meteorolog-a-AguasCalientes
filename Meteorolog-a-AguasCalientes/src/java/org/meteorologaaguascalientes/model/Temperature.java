@@ -10,11 +10,11 @@ package org.meteorologaaguascalientes.model;
  */
 public class Temperature  extends Variable{
 
-    Temperature(double value){
+    public Temperature(double value){
         super.setValue(value);
     }
 
-    Temperature(){
+    public Temperature(){
         super.setValue(0);
     }
 
