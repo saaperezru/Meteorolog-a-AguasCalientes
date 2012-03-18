@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.meteorologaaguascalientes.control.historic.HistoricControl;
 import org.meteorologaaguascalientes.dao.AbstractVariableDao;
 import org.meteorologaaguascalientes.dao.DaoList;
 
@@ -41,30 +42,32 @@ public class History extends HttpServlet {
                     if (entry.getKey().equals(variableName)) {
                         List<SortedMap<Date, Double>> dataList;
                         SortedMap<Date, Double> data;
-                        /*
-                         * HistoryControl invocation HistoryControl
-                         * HistoryControl historyControl = new HistoryControl();
-                         * dataList = historyControl.getData(entry.getValue());
-                         */
-                        dataList = new ArrayList<SortedMap<Date, Double>>();
-                        data = new TreeMap<Date, Double>();
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.DAY_OF_YEAR, 1);
-                        int i = 1;
-                        do {
-                            data.put(c.getTime(), Math.random());
-                            c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR) + 1);
-                        } while (i++ <= 365);
-                        dataList.add(data);
+                        
+                         HistoricControl historyControl = new HistoricControl();
+                         dataList = historyControl.getData(entry.getValue());
+                         
 
-                        data = new TreeMap<Date, Double>();
-                        data.put(dataList.get(0).lastKey(), dataList.get(0).get(dataList.get(0).lastKey()));
-                        i = 1;
-                        do {
-                            data.put(c.getTime(), Math.random());
-                            c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR) + 1);
-                        } while (i++ <= 10);
-                        dataList.add(data);
+
+//                        dataList = new ArrayList<SortedMap<Date, Double>>();
+//                        data = new TreeMap<Date, Double>();
+//                        Calendar c = Calendar.getInstance();
+//                        c.set(Calendar.DAY_OF_YEAR, 1);
+//                        int i = 1;
+//                        do {
+//                            data.put(c.getTime(), Math.random());
+//                            c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR) + 1);
+//                        } while (i++ <= 365);
+//                        dataList.add(data);
+//
+//                        data = new TreeMap<Date, Double>();
+//                        data.put(dataList.get(0).lastKey(), dataList.get(0).get(dataList.get(0).lastKey()));
+//                        i = 1;
+//                        do {
+//                            data.put(c.getTime(), Math.random());
+//                            c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR) + 1);
+//                        } while (i++ <= 10);
+//                        dataList.add(data);
+
 
                         out.println(prop.getProperty("date") + "," + prop.getProperty("dao." + variableName) + "," + prop.getProperty("forecast"));
 

@@ -24,7 +24,7 @@
 	for (String i : DaoVariables.keySet()) {
 		Variable var = (Variable) DaoVariables.get(i).getLastValue();
 		if (var == null){
-			lastValues.put(i,"+");
+			lastValues.put(i,"-");
 		}else{
 			timestamp = var.getTime();
 			lastValues.put(i, var.getValue());
