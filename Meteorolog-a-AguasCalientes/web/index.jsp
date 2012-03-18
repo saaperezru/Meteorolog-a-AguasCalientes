@@ -1,6 +1,6 @@
 <%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.MeasuresList"%>
-<%@page import="org.meteorologaaguascalientes.dao.VariableDao"%>
+<%@page import="org.meteorologaaguascalientes.dao.AbstractVariableDao"%>
 <%@page import="org.meteorologaaguascalientes.dao.Dao"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.logging.Logger"%>
@@ -11,7 +11,7 @@
     Properties prop = new Properties();
     prop.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
     List<Dao> daoList = DaoList.getDao();
-    List<VariableDao> variableList = DaoList.getVariables();
+    List<AbstractVariableDao> variableList = DaoList.getVariables();
 %>
 <!DOCTYPE html>
 <html>
@@ -35,6 +35,12 @@
                     g.updateOptions({file: "history?variable=" + j.val()});
                 });
                 jQuery("#variable input[type=radio]:first").click();
+                jQuery("#centralTendency").change(function(){
+                    getReport(jQuery(this), "CentralTendency");
+                });
+                jQuery("#spread").change(function(){
+                    getReport(jQuery(this), "Spread");
+                });
                 var f = jQuery("#insertForm");
                 f.submit(function(){
                     jQuery.post(f.attr("action"), f.serialize(), function(data){
@@ -61,6 +67,19 @@
                         jQuery("#" + data[i].name + "LastValue").html(data[i].value);
                     }
                 });
+            }
+            
+            function getReport(j, suffix){
+                var measure = j.val();
+                if("" == measure){
+                    jQuery("td[id$='" + suffix + "']").html("-");
+                } else {
+                    jQuery.get("report.jsp?measure=" + measure, function(data){
+                        for(var i in data){
+                            jQuery("#" + data[i].name + suffix).html(data[i].value);
+                        }
+                    });
+                }
             }
         </script>
     </head>
@@ -115,7 +134,7 @@
                     <form id="historyForm" action="history.jsp" method="get">
                         <div id="variable">
                             <%
-                                for (VariableDao dao : variableList) {
+                                for (AbstractVariableDao dao : variableList) {
                             %>
                             <input type="radio" name="variable" id="variable<%= dao.getVisibleName()%>" value="<%= dao.getVisibleName()%>"><label for="variable<%= dao.getVisibleName()%>"><%= prop.getProperty("dao." + dao.getVisibleName())%></label></input>
                             <%        }
@@ -131,7 +150,7 @@
                             <tr>
                                 <th>Medida</th>
                                 <%
-                                    for (VariableDao dao : variableList) {
+                                    for (AbstractVariableDao dao : variableList) {
                                 %>
                                 <th><%= prop.getProperty("dao." + dao.getVisibleName())%> [<%= prop.getProperty("dao." + dao.getVisibleName() + ".extra")%>]</th>
                                 <%        }
@@ -157,7 +176,7 @@
                                 </td>
                         <div id="variable">
                             <%
-                                for (VariableDao dao : variableList) {
+                                for (AbstractVariableDao dao : variableList) {
                             %>
                             <td id="<%= dao.getVisibleName()%>CentralTendency">-</td>
                             <%        }
@@ -180,7 +199,7 @@
                                     </select>
                                 </td>
                                 <%
-                                    for (VariableDao dao : variableList) {
+                                    for (AbstractVariableDao dao : variableList) {
                                 %>
                                 <td id="<%= dao.getVisibleName()%>Spread">-</td>
                                 <%        }

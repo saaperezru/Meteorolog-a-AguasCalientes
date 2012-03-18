@@ -17,9 +17,9 @@
     lastValues = new HashMap();
     List<Dao> daoList = DaoList.getDao();
     lastValues.put(daoList.get(0), new Date());
-    lastValues.put(daoList.get(1), 25D);
-    lastValues.put(daoList.get(2), 100D);
-    lastValues.put(daoList.get(3), 1D);
+    lastValues.put(daoList.get(1), Math.random());
+    lastValues.put(daoList.get(2), Math.random());
+    lastValues.put(daoList.get(3), Math.random());
 %>
 <%
     Properties prop = new Properties();

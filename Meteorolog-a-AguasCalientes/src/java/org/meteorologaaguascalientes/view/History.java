@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.meteorologaaguascalientes.dao.DaoList;
-import org.meteorologaaguascalientes.dao.VariableDao;
+import org.meteorologaaguascalientes.dao.AbstractVariableDao;
 
 @WebServlet(name = "History", urlPatterns = {"/history"})
 public class History extends HttpServlet {
@@ -35,14 +35,14 @@ public class History extends HttpServlet {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             String variableName = request.getParameter("variable");
             if (variableName != null) {
-                for (VariableDao variableDao : DaoList.getVariables()) {
+                for (AbstractVariableDao variableDao : DaoList.getVariables()) {
                     if (variableDao.getVisibleName().equals(variableName)) {
                         List<SortedMap<Date, Double>> dataList;
                         SortedMap<Date, Double> data;
                         /*
                          * HistoryControl invocation HistoryControl
                          * historyControl = new HistoryControl(); data =
-                         * historyControl.getData(variableDao);
+                         * dataList = historyControl.getData(variableDao);
                          */
                         dataList = new ArrayList<SortedMap<Date, Double>>();
                         data = new TreeMap<Date, Double>();

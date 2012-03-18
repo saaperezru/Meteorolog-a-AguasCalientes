@@ -7,18 +7,18 @@ import java.util.List;
 public final class DaoList {
 
     private final static List<Dao> dao;
-    private final static List<VariableDao> variables;
+    private final static List<AbstractVariableDao> variables;
 
     static {
         dao = new ArrayList<Dao>();
-        variables = new ArrayList<VariableDao>();
+        variables = new ArrayList<AbstractVariableDao>();
         dao.add(new Dao() {
 
             {
                 setVisibleName("sample");
             }
         });
-        VariableDao vd = new VariableDao() {
+        AbstractVariableDao vd = new AbstractVariableDao() {
 
             {
                 setVisibleName("temperature");
@@ -26,7 +26,7 @@ public final class DaoList {
         };
         dao.add(vd);
         variables.add(vd);
-        vd = new VariableDao() {
+        vd = new AbstractVariableDao() {
 
             {
                 setVisibleName("atmosphericPressure");
@@ -34,7 +34,7 @@ public final class DaoList {
         };
         dao.add(vd);
         variables.add(vd);
-        vd = new VariableDao() {
+        vd = new AbstractVariableDao() {
 
             {
                 setVisibleName("pluviosity");
@@ -51,7 +51,7 @@ public final class DaoList {
         return Collections.unmodifiableList(dao);
     }
 
-    public static List<VariableDao> getVariables() {
+    public static List<AbstractVariableDao> getVariables() {
         return Collections.unmodifiableList(variables);
     }
 }
