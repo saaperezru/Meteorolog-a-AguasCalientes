@@ -48,3 +48,9 @@ input[type=text] {
 select {
     width: 90%;
 }
+
+#dygraph {
+    width: 90%;
+    height: 400px;
+    margin: 20px auto;
+}

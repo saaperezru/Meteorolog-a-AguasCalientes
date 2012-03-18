@@ -23,11 +23,18 @@
         <link href="css/main.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="js/jquery-1.7.1.min.js" ></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js" ></script>
+        <script type="text/javascript" src="js/dygraph-combined.js"></script>
         <script type="text/javascript">
             jQuery(document).ready(function(){
+                var g = new Dygraph(document.getElementById("dygraph"), "history?variable=temperature", {animatedZooms: true});
                 jQuery("input:submit").button();
                 jQuery("#tabs").tabs();
-                jQuery("#variable").buttonset();                
+                jQuery("#variable").buttonset();
+                jQuery("#variable input[type=radio]").click(function(){
+                    var j = jQuery(this);
+                    g.updateOptions({file: "history?variable=" + j.val()});
+                });
+                
             });
         </script>
     </head>
@@ -78,14 +85,18 @@
                     <li><a href="#tab-2">Reportes</a></li>
                 </ul>
                 <div id="tab-1">
-                    <div id="variable">
-                        <%
-                            for (VariableDao dao : variableList) {
-                        %>
-                        <input type="radio" name="variable" id="variable<%= dao.getVisibleName()%>"><label for="variable<%= dao.getVisibleName()%>"><%= prop.getProperty("dao." + dao.getVisibleName())%></label></input>
-                        <%        }
-                        %>
-                    </div>
+                    <form id="historyForm" action="history.jsp" method="get">
+                        <div id="variable">
+                            <%
+                                for (VariableDao dao : variableList) {
+                            %>
+                            <input type="radio" name="variable" id="variable<%= dao.getVisibleName()%>" value="<%= dao.getVisibleName()%>"><label for="variable<%= dao.getVisibleName()%>"><%= prop.getProperty("dao." + dao.getVisibleName())%></label></input>
+                            <%        }
+                            %>
+                        </div>
+                        <div id="dygraph">
+                        </div>
+                    </form>
                 </div>
                 <div id="tab-2">
                     <table>
