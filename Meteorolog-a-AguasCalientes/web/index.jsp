@@ -20,6 +20,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Central Meteorológica Aguas Calientes</title>
+        <link href="favicon.ico" rel="icon" type="image/x-icon" />
         <link href='http://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css'>
         <link href="css/smoothness/jquery-ui-1.8.18.custom.css" rel="stylesheet" type="text/css" />
         <link href="css/main.css" rel="stylesheet" type="text/css"/>
@@ -138,7 +139,7 @@
                             <%
                                 for (Entry<String,AbstractVariableDao> entry : variableList.entrySet()) {
                             %>
-                            <input type="radio" name="variable" id="variable<%= entry.getKey()%>" value="<%= entry.getKey()%>"><label for="variable<%= entry.getKey()%>"><%= prop.getProperty("dao." + entry.getKey())%></label></input>
+                            <input type="radio" name="variable" id="variable<%= entry.getKey()%>" value="<%= entry.getKey()%>"><label for="variable<%= entry.getKey()%>"><%= prop.getProperty("dao." + entry.getKey())%> [<%= prop.getProperty("dao." + entry.getKey() + ".extra")%>]</label></input>
                             <%        }
                             %>
                         </div>
