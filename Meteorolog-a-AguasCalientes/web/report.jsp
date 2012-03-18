@@ -1,6 +1,7 @@
 <%@page import="org.meteorologaaguascalientes.dao.AbstractVariableDao"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.MeasuresList"%>
+<%@page import="org.meteorologaaguascalientes.control.report.ReportsControl"%>
 <%@page import="org.meteorologaaguascalientes.dao.DaoList"%>
 <%@page import="org.meteorologaaguascalientes.dao.Dao"%>
 <%@page import="java.util.*"%>
@@ -18,17 +19,12 @@
         }
         if (measure != null) {
 %>
-<%--
-    // ReportsControl invocation
+<%
+
+    
     ReportsControl reportsControl = new ReportsControl();
     report = reportsControl.getReport(measure);
---%>
-<%
-    report = new HashMap<String, Double>();
-    List<AbstractVariableDao> daoList = DaoList.getVariables();
-    report.put("temperature", Math.random());
-    report.put("atmosphericPressure", Math.random());
-    report.put("pluviosity", Math.random());
+    
 %>
 <json:array var="entry" items="<%= report.entrySet()%>">
     <json:object>

@@ -13,11 +13,16 @@ import org.meteorologaaguascalientes.model.Variable;
  *
  * @author Diego Gerena (SNIPERCAT) <dagerenaq@gmail.com>
  */
-public class ReportsCotrol {
+public class ReportsControl {
+
+    public ReportsControl() {
+    }
     
-    public Map<AbstractVariableDao,Double> getReport(Measure measure){
+    
+    
+    public Map<String,Double> getReport(Measure measure){
         
-        Map Values = new HashMap(); // Will store the value returned by measure.calculate() for each variable in the list
+        Map<String,Double> Values = new HashMap<String,Double>(); // Will store the value returned by measure.calculate() for each variable in the list
         List<AbstractVariableDao> VariablesList = DaoList.getVariables(); // Will store the list of variables returned by the DaoList
         ArrayList<Variable> DaoData; // Will store the data returned by each Dao with the method getAllValues();
         double result; // Will store the result returned by measure.calculate()
