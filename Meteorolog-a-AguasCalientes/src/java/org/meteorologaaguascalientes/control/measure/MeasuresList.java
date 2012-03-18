@@ -6,32 +6,39 @@ package org.meteorologaaguascalientes.control.measure;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
+import java.util.List;
 
 /**
  *
  * @author josebermeo
  */
 public class MeasuresList {
-    
+
     private static MeasuresList measuresList = null;
-    private static HashMap<String,Measure>  centralTendencyMeasures = null ;
-    private static HashMap<String,Measure>  spreadMeasures = null;
-    
-    public MeasuresList() {}
-    
-    public  static MeasuresList getInstance(){
-        if(measuresList == null){
-            centralTendencyMeasures = new HashMap();
-            centralTendencyMeasures.put("Mean", new Mean());
-            centralTendencyMeasures.put("Median", new Median());
-            centralTendencyMeasures.put("Mode", new Mode());
-            spreadMeasures = new HashMap();
-            spreadMeasures.put("Variance", new Variance());
-            spreadMeasures.put("StandardDeviation", new StandardDeviation());
-            spreadMeasures.put("InterquartileRange", new InterquartileRange());
-            return measuresList;
+    private HashMap<String, Measure> centralTendencyMeasures = null;
+    private HashMap<String, Measure> spreadMeasures = null;
+
+    private MeasuresList() {
+        centralTendencyMeasures = new HashMap();
+        Mean mean = new Mean();
+        centralTendencyMeasures.put(mean.getClass().getSimpleName(), mean);
+        Median median = new Median();
+        centralTendencyMeasures.put(median.getClass().getSimpleName(), median);
+        Mode mode = new Mode();
+        centralTendencyMeasures.put(mode.getClass().getSimpleName(), mode);
+        
+        spreadMeasures = new HashMap();
+        Variance variance = new Variance();
+        spreadMeasures.put(variance.getClass().getSimpleName(), variance);
+        StandardDeviation standardDeviation = new StandardDeviation();
+        spreadMeasures.put(standardDeviation.getClass().getSimpleName(),standardDeviation);
+        InterquartileRange interquartileRange = new InterquartileRange();
+        spreadMeasures.put(interquartileRange.getClass().getSimpleName(), interquartileRange );
+    }
+
+    public static MeasuresList getInstance() {
+        if (measuresList == null) {
+            measuresList = new MeasuresList();
         }
         return measuresList;
     }
@@ -43,39 +50,36 @@ public class MeasuresList {
     public Measure getSpreadMeasure(String key) {
         return spreadMeasures.get(key);
     }
-    
-    public static ArrayList<Measure> getCentralTendencyMeasures() {
+
+    public static List<Measure> getCentralTendencyMeasures() {
         return MeasuresList.getInstance().centralTendencyMeasuresList();
     }
-    public ArrayList<Measure> centralTendencyMeasuresList() {
-        ArrayList<Measure> list = new ArrayList<Measure>();
-        for(Object measure : centralTendencyMeasures.values().toArray())
-           list.add((Measure)measure);
-        return list;
+
+    private ArrayList<Measure> centralTendencyMeasuresList() {
+        return new ArrayList<Measure>(centralTendencyMeasures.values());
     }
 
-    public static ArrayList<Measure> getSpreadMeasures() {
+    public static List<Measure> getSpreadMeasures() {
         return MeasuresList.getInstance().spreadMeasuresList();
     }
-    public ArrayList<Measure> spreadMeasuresList() {
-        ArrayList<Measure> list = new ArrayList<Measure>();
-        for(Object measure : spreadMeasures.values().toArray())
-           list.add((Measure)measure);
-        return list;
+
+    private List<Measure> spreadMeasuresList() {
+        return new ArrayList<Measure>(spreadMeasures.values());
     }
 
     public ArrayList<String> getCentralTendencyMeasuresKeys() {
         ArrayList<String> list = new ArrayList<String>();
-        for(Object measure : centralTendencyMeasures.keySet().toArray())
-           list.add((String)measure);
+        for (Object measure : centralTendencyMeasures.keySet().toArray()) {
+            list.add((String) measure);
+        }
         return list;
     }
 
     public ArrayList<String> getSpreadMeasuresKeys() {
         ArrayList<String> list = new ArrayList<String>();
-        for(Object measure : spreadMeasures.keySet().toArray())
-           list.add((String)measure);
+        for (Object measure : spreadMeasures.keySet().toArray()) {
+            list.add((String) measure);
+        }
         return list;
     }
-
 }

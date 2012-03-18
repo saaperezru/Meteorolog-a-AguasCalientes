@@ -1,23 +1,26 @@
-<%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.Map"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.MeasuresList"%>
+<%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
+<%@page import="org.meteorologaaguascalientes.dao.DaoList"%>
 <%@page import="org.meteorologaaguascalientes.dao.AbstractVariableDao"%>
 <%@page import="org.meteorologaaguascalientes.dao.Dao"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.logging.Logger"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Properties"%>
-<%@page import="org.meteorologaaguascalientes.dao.DaoList"%>
+<%@page import="java.util.List"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     Properties prop = new Properties();
     prop.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
-    List<Dao> daoList = DaoList.getDao();
-    List<AbstractVariableDao> variableList = DaoList.getVariables();
+    DaoList daoList = DaoList.getInstance();
+    Map<String,Dao> daoMap = DaoList.getInstance().getDaoMap();
+    Map<String,AbstractVariableDao> variableList = daoList.getVariablesDaoMap();
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Central Meteorológica Aguas Calientes</title>
+        <link href="favicon.ico" rel="icon" type="image/x-icon" />
         <link href='http://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css'>
         <link href="css/smoothness/jquery-ui-1.8.18.custom.css" rel="stylesheet" type="text/css" />
         <link href="css/main.css" rel="stylesheet" type="text/css"/>
@@ -92,9 +95,9 @@
                         <tr>
                             <th>&nbsp;</th>
                             <%
-                                for (Dao dao : daoList) {
+                                for (Entry<String,Dao> entry : daoMap.entrySet()) {
                             %>
-                            <th><%= prop.getProperty("dao." + dao.getVisibleName())%> [<%= prop.getProperty("dao." + dao.getVisibleName() + ".extra")%>]</th>
+                            <th><%= prop.getProperty("dao." + entry.getKey())%> [<%= prop.getProperty("dao." + entry.getKey() + ".extra")%>]</th>
                             <%}%>
                         </tr>
                     </thead>
@@ -102,23 +105,23 @@
                         <tr>
                             <td>Último valor</td>
                             <%
-                                for (Dao dao : daoList) {
+                                for (Entry<String,Dao> entry : daoMap.entrySet()) {
                             %>
-                            <td id="<%= dao.getVisibleName()%>LastValue">-</td>
+                            <td id="<%= entry.getKey()%>LastValue">-</td>
                             <%}%>
                         </tr>
                         <tr>
                             <td>Nuevo valor</td>
                             <%
-                                for (Dao dao : daoList) {
+                                for (Entry<String,Dao> entry : daoMap.entrySet()) {
                             %>
                             <td>        
-                                <input type="text" name="<%= dao.getVisibleName()%>" required="required" />
+                                <input type="text" name="<%= entry.getKey()%>" required="required" />
                             </td>
                             <%}%>
                         </tr>
                         <tr>
-                            <td colspan="<%= daoList.size()%>" id="message" style="text-align: right;"></td>
+                            <td colspan="<%= daoMap.size()%>" id="message" style="text-align: right;"></td>
                             <td style="text-align: right;"><input type="submit" value="Enviar"/></td>
                         </tr>
                     </tbody>
@@ -134,9 +137,9 @@
                     <form id="historyForm" action="history.jsp" method="get">
                         <div id="variable">
                             <%
-                                for (AbstractVariableDao dao : variableList) {
+                                for (Entry<String,AbstractVariableDao> entry : variableList.entrySet()) {
                             %>
-                            <input type="radio" name="variable" id="variable<%= dao.getVisibleName()%>" value="<%= dao.getVisibleName()%>"><label for="variable<%= dao.getVisibleName()%>"><%= prop.getProperty("dao." + dao.getVisibleName())%></label></input>
+                            <input type="radio" name="variable" id="variable<%= entry.getKey()%>" value="<%= entry.getKey()%>"><label for="variable<%= entry.getKey()%>"><%= prop.getProperty("dao." + entry.getKey())%> [<%= prop.getProperty("dao." + entry.getKey() + ".extra")%>]</label></input>
                             <%        }
                             %>
                         </div>
@@ -150,9 +153,9 @@
                             <tr>
                                 <th>Medida</th>
                                 <%
-                                    for (AbstractVariableDao dao : variableList) {
+                                    for (Entry<String,AbstractVariableDao> entry : variableList.entrySet()) {
                                 %>
-                                <th><%= prop.getProperty("dao." + dao.getVisibleName())%> [<%= prop.getProperty("dao." + dao.getVisibleName() + ".extra")%>]</th>
+                                <th><%= prop.getProperty("dao." + entry.getKey())%> [<%= prop.getProperty("dao." + entry.getKey() + ".extra")%>]</th>
                                 <%        }
                                 %>
                             </tr>
@@ -163,12 +166,9 @@
                                     <select id="centralTendency">
                                         <option value=""></option>
                                         <%
-                                            for (Measure measure : MeasuresList.getCentralTendencyMeasures()) {
-                                                String name = measure.getClass().getSimpleName();
-                                                name = name.substring(0, 1).toLowerCase() + name.substring(1);
-
+                                            for (String key : MeasuresList.getInstance().getCentralTendencyMeasuresKeys()) {
                                         %>
-                                        <option value="<%=name%>"><%= prop.getProperty("measure." + name)%></option>
+                                        <option value="<%=key%>"><%= prop.getProperty("measure." + key)%></option>
                                         <%
                                             }
                                         %>
@@ -176,9 +176,9 @@
                                 </td>
                         <div id="variable">
                             <%
-                                for (AbstractVariableDao dao : variableList) {
+                                for (Entry<String,AbstractVariableDao> entry : variableList.entrySet()) {
                             %>
-                            <td id="<%= dao.getVisibleName()%>CentralTendency">-</td>
+                            <td id="<%= entry.getKey()%>CentralTendency">-</td>
                             <%        }
                             %>
                             </tr>
@@ -187,21 +187,18 @@
                                     <select id="spread">
                                         <option value=""></option>
                                         <%
-                                            for (Measure measure : MeasuresList.getSpreadMeasures()) {
-                                                String name = measure.getClass().getSimpleName();
-                                                name = name.substring(0, 1).toLowerCase() + name.substring(1);
-
+                                            for (String key : MeasuresList.getInstance().getSpreadMeasuresKeys()) {
                                         %>
-                                        <option value="<%=name%>"><%= prop.getProperty("measure." + name)%></option>
+                                        <option value="<%=key%>"><%= prop.getProperty("measure." + key)%></option>
                                         <%
                                             }
                                         %>
                                     </select>
                                 </td>
                                 <%
-                                    for (AbstractVariableDao dao : variableList) {
+                                    for (Entry<String,AbstractVariableDao> entry : variableList.entrySet()) {
                                 %>
-                                <td id="<%= dao.getVisibleName()%>Spread">-</td>
+                                <td id="<%= entry.getKey()%>Spread">-</td>
                                 <%        }
                                 %>
                             </tr>

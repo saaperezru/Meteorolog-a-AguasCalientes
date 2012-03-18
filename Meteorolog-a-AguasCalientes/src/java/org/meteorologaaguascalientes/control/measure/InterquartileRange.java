@@ -4,7 +4,12 @@
  */
 package org.meteorologaaguascalientes.control.measure;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import org.meteorologaaguascalientes.model.VariableTimeComparator;
+import org.meteorologaaguascalientes.model.Variable;
 
 /**
  *
@@ -13,12 +18,11 @@ import java.util.Arrays;
 public class InterquartileRange implements Measure{
 
     @Override
-    public double calculate(double[] data) {
-        if(data.length < 4)
+    public double calculate(ArrayList<Variable> data) {
+        if(data.size()<4)
             return -1;
-        Arrays.sort(data);
-        return data[data.length/4-1]-data[data.length-data.length/4];
-        
+        Collections.sort(data,new VariableTimeComparator());
+        return data.get(data.size()/4-1).getValue()-data.get(data.size()-data.size()/4).getValue();
     }
     
 }

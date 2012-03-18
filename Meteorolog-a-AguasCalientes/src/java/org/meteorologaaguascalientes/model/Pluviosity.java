@@ -6,11 +6,11 @@ package org.meteorologaaguascalientes.model;
 
 public class Pluviosity extends Variable {
 
-    Pluviosity(double value){
+    public Pluviosity(double value){
         super.setValue(value);
     }
 
-    Pluviosity(){
+    public Pluviosity(){
         super.setValue(0);
     }
 

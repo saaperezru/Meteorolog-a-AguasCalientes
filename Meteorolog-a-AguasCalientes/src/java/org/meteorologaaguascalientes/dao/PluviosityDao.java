@@ -4,16 +4,13 @@
  */
 package org.meteorologaaguascalientes.dao;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.meteorologaaguascalientes.model.Pluviosity;
-import org.meteorologaaguascalientes.model.Variable;
 
 /**
  *
  * @author tuareg
  */
-public class PluvisoityDao extends AbstractVariableDao<Pluviosity>{
+public class PluviosityDao extends AbstractVariableDao<Pluviosity>{
 
 	@Override
 	public void createRecord(Pluviosity record) {
