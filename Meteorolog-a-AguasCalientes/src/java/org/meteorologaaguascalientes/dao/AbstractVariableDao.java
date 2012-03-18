@@ -14,7 +14,7 @@ import org.meteorologaaguascalientes.model.Variable;
 public abstract class AbstractVariableDao<E> extends Dao<E>{
 
 	protected ArrayList<E>  data = new ArrayList<E>();
-	protected E lastRecord;
+	protected E lastRecord = null;
 
 	
 
