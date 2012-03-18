@@ -3,15 +3,14 @@ package org.meteorologaaguascalientes.view;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.Map.Entry;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.meteorologaaguascalientes.dao.AbstractVariableDao;
-import org.meteorologaaguascalientes.dao.Dao;
 import org.meteorologaaguascalientes.dao.DaoList;
 
 @WebServlet(name = "History", urlPatterns = {"/history"})
