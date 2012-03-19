@@ -12,7 +12,7 @@ public abstract class Dao<E> {
 
 	private String visibleName;
 
-	public abstract void createRecord(E record);
+	public abstract boolean createRecord(E record);
 
 	public void setVisibleName(String visibleName) {
 		this.visibleName = visibleName;
