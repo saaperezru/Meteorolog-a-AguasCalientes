@@ -34,7 +34,7 @@
     for (Map.Entry<String,Double> entry : report.entrySet()){
 	    object = new JsonObject();
 	    object.addProperty("name", entry.getKey());
-	    object.addProperty("value", entry.getValue());
+	    object.addProperty("value", ((entry.getValue().toString().compareTo("NaN")==0)?"Datos insuficientes":entry.getValue().toString()));
 	    array.add(object);
     }
     

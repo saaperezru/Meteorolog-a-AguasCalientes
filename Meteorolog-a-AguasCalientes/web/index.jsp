@@ -29,13 +29,17 @@
         <script type="text/javascript" src="js/dygraph-combined.js"></script>
         <script type="text/javascript">
             jQuery(document).ready(function(){
-                var g = new Dygraph(document.getElementById("dygraph"), "", {animatedZooms: true});
+                var g = null;
                 jQuery("input:submit").button();
                 jQuery("#tabs").tabs();
                 jQuery("#variable").buttonset();
                 jQuery("#variable input[type=radio]").click(function(){
                     var j = jQuery(this);
-                    g.updateOptions({file: "history?variable=" + j.val()});
+                    if(g != null) {
+	                g.updateOptions({file: "history?variable=" + j.val()});
+                    } else {
+                    	g = new Dygraph(document.getElementById("dygraph"), "history?variable=" + j.val(), {animatedZooms: true});
+                    }
                 });
                 jQuery("#variable input[type=radio]:first").click();
                 jQuery("#centralTendency").change(function(){
