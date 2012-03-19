@@ -19,7 +19,7 @@ public class Mode implements Measure{
     @Override
     public double calculate(ArrayList<Variable> data) {
         if(data.isEmpty())
-            return -1;
+            return java.lang.Double.NaN;
         Map<Double,Integer> counter=new HashMap<Double, Integer>();
         for(int i = 0; i< data.size(); i++)
             if(counter.containsKey(data.get(i).getValue()))

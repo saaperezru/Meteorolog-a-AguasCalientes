@@ -16,7 +16,7 @@ public class Mean implements Measure{
     @Override
     public double calculate(ArrayList<Variable> data) {
         if(data.isEmpty())
-            return -1;
+            return java.lang.Double.NaN;
         double mean = 0;
         for(int i = 0; i<data.size(); i++)
             mean += data.get(i).getValue();

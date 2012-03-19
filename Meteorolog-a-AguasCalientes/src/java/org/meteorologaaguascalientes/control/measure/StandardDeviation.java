@@ -16,7 +16,7 @@ public class StandardDeviation implements Measure{
     @Override
     public double calculate(ArrayList<Variable> data) {
         if(data.isEmpty())
-            return -1;
+            return java.lang.Double.NaN;
         double variance = (new Variance()).calculate(data);
         return Math.sqrt(variance);
     }
