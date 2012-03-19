@@ -6,7 +6,6 @@ package org.meteorologaaguascalientes.control.forecast;
 
 import java.util.SortedMap;
 import java.util.TreeMap;
-import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.stat.regression.RegressionResults;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
