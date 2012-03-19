@@ -23,7 +23,7 @@ public class ReportsControl {
     public Map<String,Double> getReport(Measure measure){
         
         Map<String,Double> Values = new HashMap<String,Double>(); // Will store the value returned by measure.calculate() for each variable in the list
-        List<AbstractVariableDao> VariablesList = DaoList.getVariables(); // Will store the list of variables returned by the DaoList
+        HashMap<String,AbstractVariableDao> VariablesList = DaoList.getInstance().getVariablesDaoMap(); // Stores the list of variables returned by the DaoList
         ArrayList<Variable> DaoData; // Will store the data returned by each Dao with the method getAllValues();
         double result; // Will store the result returned by measure.calculate()
         
@@ -32,10 +32,10 @@ public class ReportsControl {
          * Then calculate the measure
          * and add it to the map
          */
-        for(int i = 0 ;i< VariablesList.size() ;i++){
+        for(String i : VariablesList.keySet()){
             DaoData = (ArrayList<Variable>) VariablesList.get(i).getAllValues();
             result = measure.calculate(DaoData);
-            Values.put(VariablesList.get(i).getVisibleName(), result);
+            Values.put(i , result);
         }
         
         return Values;
