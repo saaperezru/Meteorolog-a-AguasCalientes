@@ -1,9 +1,10 @@
+<%@page import="com.google.gson.Gson"%>
+<%@page import="com.google.gson.JsonObject"%>
 <%@page import="org.meteorologaaguascalientes.control.InsertControl"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="org.meteorologaaguascalientes.dao.DaoList"%>
 <%@page import="org.meteorologaaguascalientes.dao.Dao"%>
 <%@page import="java.util.*"%>
-<%@taglib uri="http://www.atg.com/taglibs/json" prefix="json" %>
 <%@page contentType="text/json" pageEncoding="UTF-8"%>
 <%! boolean success = false;
 %>
@@ -21,7 +22,9 @@
     // InsertControl invocation
     InsertControl insertControl = new InsertControl();
     success = insertControl.insertValues(values);
+    
+    Gson g = new Gson();
+    JsonObject object = new JsonObject();
+    object.addProperty("success", success);
 %>
-<json:object>
-    <json:property name="success" value="<%= success %>"/>
-</json:object>
+<%= g.toJson(object)%>

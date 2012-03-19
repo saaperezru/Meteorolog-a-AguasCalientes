@@ -12,11 +12,12 @@ import org.meteorologaaguascalientes.model.Temperature;
 public class TemperatureDao extends AbstractVariableDao<Temperature> {
 
 	@Override
-	public void createRecord(Temperature record) {
+	public boolean createRecord(Temperature record) {
 		boolean add = data.add(record);
 		if (lastRecord == null || (lastRecord.getTime().compareTo(record.getTime()))<=0){
 			lastRecord = record;
 		}
+		return true;
 	}
 	
 }

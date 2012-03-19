@@ -1,3 +1,6 @@
+<%@page import="com.google.gson.JsonObject"%>
+<%@page import="com.google.gson.JsonArray"%>
+<%@page import="com.google.gson.Gson"%>
 <%@page import="org.meteorologaaguascalientes.dao.AbstractVariableDao"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.MeasuresList"%>
@@ -5,11 +8,12 @@
 <%@page import="org.meteorologaaguascalientes.dao.DaoList"%>
 <%@page import="org.meteorologaaguascalientes.dao.Dao"%>
 <%@page import="java.util.*"%>
-<%@taglib uri="http://www.atg.com/taglibs/json" prefix="json" %>
 <%@page contentType="text/json" pageEncoding="UTF-8"%>
 <%!    Map<String, Double> report;
 %>
 <%
+    Gson g = new Gson();
+    JsonArray array = new JsonArray();
     String measureName = request.getParameter("measure");
     if (measureName != null) {
         MeasuresList measuresList = MeasuresList.getInstance();
@@ -24,15 +28,17 @@
     
     ReportsControl reportsControl = new ReportsControl();
     report = reportsControl.getReport(measure);
+
+    JsonObject object;
+
+    for (Map.Entry<String,Double> entry : report.entrySet()){
+	    object = new JsonObject();
+	    object.addProperty("name", entry.getKey());
+	    object.addProperty("value", entry.getValue());
+	    array.add(object);
+    }
     
-%>
-<json:array var="entry" items="<%= report.entrySet()%>">
-    <json:object>
-        <json:property name="name" value="${entry.getKey()}"/>
-        <json:property name="value" value="${entry.getValue()}"/>
-    </json:object>
-</json:array>
-<%
         }
     }
 %>
+<%= g.toJson(array) %>
