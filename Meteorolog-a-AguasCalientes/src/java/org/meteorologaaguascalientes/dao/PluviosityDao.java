@@ -13,11 +13,12 @@ import org.meteorologaaguascalientes.model.Pluviosity;
 public class PluviosityDao extends AbstractVariableDao<Pluviosity>{
 
 	@Override
-	public void createRecord(Pluviosity record) {
+	public boolean createRecord(Pluviosity record) {
 		boolean add = data.add(record);
 		if (lastRecord == null || (lastRecord.getTime().compareTo(record.getTime()))<=0){
 			lastRecord = record;
 		}
+		return true;
 	}
 
 	

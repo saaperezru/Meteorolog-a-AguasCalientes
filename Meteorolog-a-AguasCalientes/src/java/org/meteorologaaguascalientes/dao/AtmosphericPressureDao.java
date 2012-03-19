@@ -13,10 +13,11 @@ import org.meteorologaaguascalientes.model.AtmosphericPressure;
 public class AtmosphericPressureDao extends AbstractVariableDao<AtmosphericPressure> {
 
 	@Override
-	public void createRecord(AtmosphericPressure record) {
+	public boolean createRecord(AtmosphericPressure record) {
 		boolean add = data.add(record);
 		if (lastRecord == null || (lastRecord.getTime().compareTo(record.getTime()))<=0){
 			lastRecord = record;
 		}
+		return true;
 	}
 }

@@ -43,6 +43,7 @@ public class InsertControl {
         }catch(ParseException e){
             return false;
         }
+	
         Sample sample = new Sample(time);
         
         double val;
@@ -78,7 +79,8 @@ public class InsertControl {
         atmosphericPressure.setTime(time);
         
         //Saving
-        database.get("sample").createRecord(sample);
+        if (!database.get("sample").createRecord(sample))
+		return false;
         database.get("temperature").createRecord(temperature);
         database.get("pluviosity").createRecord(pluviosity);
         database.get("atmosphericPressure").createRecord(atmosphericPressure);

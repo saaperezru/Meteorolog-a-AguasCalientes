@@ -16,8 +16,14 @@ public class SampleDao extends Dao<Sample>{
 	private ArrayList<Sample> samples = new ArrayList<Sample>();
 
 	@Override
-	public void createRecord(Sample record) {
+	public boolean createRecord(Sample record) {
+		for (Sample s : samples){
+			if (record.getTime().compareTo(s.getTime()) == 0){
+				return false;
+			}
+		}
 		samples.add(record);
+		return true;
 	}
 
 }
