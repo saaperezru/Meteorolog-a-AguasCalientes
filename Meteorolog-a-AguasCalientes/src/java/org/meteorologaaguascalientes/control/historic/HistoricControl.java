@@ -5,6 +5,7 @@
 package org.meteorologaaguascalientes.control.historic;
 
 import java.util.*;
+import org.apache.commons.math3.exception.NoDataException;
 import org.meteorologaaguascalientes.control.forecast.DefaultForecastImpl;
 import org.meteorologaaguascalientes.dao.AbstractVariableDao;
 import org.meteorologaaguascalientes.model.Variable;
@@ -36,10 +37,11 @@ public class HistoricControl {
             for (Date d : actualValues.keySet()) {
                 timeSpacedActualValues.put(d.getTime() - firstSampleTime, actualValues.get(d));
             }
-            timeSpacedForecast = new DefaultForecastImpl().forecast(10, timeSpacedActualValues);
-        
-            for (Long l:timeSpacedForecast.keySet()){
-                forecast.put(new Date(l + firstSampleTime), timeSpacedForecast.get(l));
+            if(actualValues.size()>2){
+                timeSpacedForecast = new DefaultForecastImpl().forecast(10, timeSpacedActualValues);
+                for (Long l:timeSpacedForecast.keySet()){
+                    forecast.put(new Date(l + firstSampleTime), timeSpacedForecast.get(l));
+                }
             }
         }catch(NoSuchElementException e){
         }
