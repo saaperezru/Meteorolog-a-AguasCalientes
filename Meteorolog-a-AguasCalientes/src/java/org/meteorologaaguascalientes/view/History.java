@@ -37,15 +37,15 @@ public class History extends HttpServlet {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             String variableName = request.getParameter("variable");
             if (variableName != null) {
-                
-                for (Entry<String,AbstractVariableDao> entry : DaoList.getInstance().getVariablesDaoMap().entrySet()) {
+
+                for (Entry<String, AbstractVariableDao> entry : DaoList.getInstance().getVariablesDaoMap().entrySet()) {
                     if (entry.getKey().equals(variableName)) {
                         List<SortedMap<Date, Double>> dataList;
                         SortedMap<Date, Double> data;
-                        
-                         HistoricControl historyControl = new HistoricControl();
-                         dataList = historyControl.getData(entry.getValue());
-                         
+
+                        HistoricControl historyControl = new HistoricControl();
+                        dataList = historyControl.getData(entry.getValue());
+
 
 
 //                        dataList = new ArrayList<SortedMap<Date, Double>>();
@@ -75,6 +75,9 @@ public class History extends HttpServlet {
                         for (Map.Entry<Date, Double> e : data.entrySet()) {
                             out.println(formatter.format(e.getKey())
                                     + "," + e.getValue() + ",");
+                        }
+                        if (!data.isEmpty()) {
+                            out.println(formatter.format(data.lastKey()) + ",," + data.get(data.lastKey()) + ",");
                         }
                         data = dataList.get(1);
                         for (Map.Entry<Date, Double> e : data.entrySet()) {

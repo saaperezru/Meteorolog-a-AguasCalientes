@@ -53,6 +53,7 @@
                         if(data.success){
                             m.html("Inserción exitosa");
                             m.addClass("success");
+                            updateGraph();
                             getLastValues();
                         } else {
                             m.html("Error en la inserción");
@@ -63,6 +64,10 @@
                 });
                 getLastValues();
             });
+            
+            function updateGraph(){
+                jQuery("#variable input[type=radio]:checked").click();
+            }
             
             function getLastValues() {
                 jQuery.get("lastValues.jsp", function(data){
