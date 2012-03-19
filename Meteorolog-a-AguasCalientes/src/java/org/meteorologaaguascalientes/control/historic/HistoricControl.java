@@ -31,19 +31,18 @@ public class HistoricControl {
         for (Variable v : variables) {
             actualValues.put(v.getTime(), v.getValue());
         }
+        try{
+            Long firstSampleTime = actualValues.firstKey().getTime();
+            for (Date d : actualValues.keySet()) {
+                timeSpacedActualValues.put(d.getTime() - firstSampleTime, actualValues.get(d));
+            }
+            timeSpacedForecast = new DefaultForecastImpl().forecast(10, timeSpacedActualValues);
         
-        Long firstSampleTime = actualValues.firstKey().getTime();
-        
-        for (Date d : actualValues.keySet()) {
-            timeSpacedActualValues.put(d.getTime() - firstSampleTime, actualValues.get(d));
+            for (Long l:timeSpacedForecast.keySet()){
+                forecast.put(new Date(l + firstSampleTime), timeSpacedForecast.get(l));
+            }
+        }catch(NoSuchElementException e){
         }
-        
-        timeSpacedForecast = new DefaultForecastImpl().forecast(10, timeSpacedActualValues);
-        
-        for (Long l:timeSpacedForecast.keySet()){
-            forecast.put(new Date(l + firstSampleTime), timeSpacedForecast.get(l));
-        }
-        
         data.add(forecast);
         
         return data;
