@@ -6,6 +6,7 @@ package org.meteorologaaguascalientes.control;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +41,12 @@ public class InsertControl {
         Date time;
         try{
             time = (new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa")).parse(timestring);
-        }catch(ParseException e){
+            Calendar c = Calendar.getInstance();
+            c.setTime(time);
+            if(c.get(Calendar.YEAR) < 1000){
+                throw new Exception();
+            }
+        }catch(Exception e){
             return false;
         }
 	
