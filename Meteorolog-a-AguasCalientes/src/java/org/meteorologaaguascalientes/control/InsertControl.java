@@ -4,18 +4,16 @@
  */
 package org.meteorologaaguascalientes.control;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import org.meteorologaaguascalientes.dao.Dao;
-import org.meteorologaaguascalientes.dao.DaoList;
-import org.meteorologaaguascalientes.model.AtmosphericPressure;
-import org.meteorologaaguascalientes.model.Pluviosity;
-import org.meteorologaaguascalientes.model.Sample;
-import org.meteorologaaguascalientes.model.Temperature;
+import org.meteorologaaguascalientes.businesslogic.service.AbstractService;
+import org.meteorologaaguascalientes.businesslogic.service.ServicesFactory;
+import org.meteorologaaguascalientes.vo.AtmosphericPressureVo;
+import org.meteorologaaguascalientes.vo.PluviosityVo;
+import org.meteorologaaguascalientes.vo.TemperatureVo;
 
 /**
  *
@@ -34,7 +32,7 @@ public class InsertControl {
            return false;
         
         //Load data base
-        HashMap<String, Dao> database = DaoList.getInstance().getDaoMap();
+        HashMap<String, AbstractService> database = ServicesFactory.getInstance().getDaoMap();
         
         //checking time
         String timestring = data.get("sample");
@@ -50,7 +48,6 @@ public class InsertControl {
             return false;
         }
 	
-        Sample sample = new Sample(time);
         
         double val;
         
@@ -61,7 +58,7 @@ public class InsertControl {
         }catch(NumberFormatException e){
             return false;
         }
-        Temperature temperature = new Temperature(val);
+        TemperatureVo temperature = new TemperatureVo(val);
         temperature.setTime(time);
         
         //checking pluviosity
@@ -71,7 +68,7 @@ public class InsertControl {
         }catch(NumberFormatException e){
             return false;
         }
-        Pluviosity pluviosity = new Pluviosity(val);
+        PluviosityVo pluviosity = new PluviosityVo(val);
         pluviosity.setTime(time);
         
         //checking atmosphericPressure
@@ -81,12 +78,10 @@ public class InsertControl {
         }catch(NumberFormatException e){
             return false;
         }
-        AtmosphericPressure atmosphericPressure = new AtmosphericPressure(val);
+        AtmosphericPressureVo atmosphericPressure = new AtmosphericPressureVo(val);
         atmosphericPressure.setTime(time);
         
         //Saving
-        if (!database.get("sample").createRecord(sample))
-		return false;
         database.get("temperature").createRecord(temperature);
         database.get("pluviosity").createRecord(pluviosity);
         database.get("atmosphericPressure").createRecord(atmosphericPressure);

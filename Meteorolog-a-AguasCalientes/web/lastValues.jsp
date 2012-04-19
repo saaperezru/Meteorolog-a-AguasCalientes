@@ -23,7 +23,7 @@
 	lastValues = new HashMap<String, Object>();
 	Date timestamp = null;
 	for (String i : DaoVariables.keySet()) {
-		Variable var = (Variable) DaoVariables.get(i).getLastValue();
+		VariableVo var = (VariableVo) DaoVariables.get(i).getLastValue();
 		if (var == null) {
 			lastValues.put(i, "-");
 		} else {

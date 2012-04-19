@@ -2,19 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.meteorologaaguascalientes.model;
+package org.meteorologaaguascalientes.vo;
 
 import java.util.Comparator;
-import org.meteorologaaguascalientes.model.Variable;
+import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
  *
  * @author josebermeo
  */
-public class VariableTimeComparator implements Comparator<Variable> {
+public class VariableTimeComparator implements Comparator<VariableVo> {
 
     @Override
-    public int compare(Variable t, Variable t1) {
+    public int compare(VariableVo t, VariableVo t1) {
         return t.getTime().compareTo(t1.getTime());
     }
     

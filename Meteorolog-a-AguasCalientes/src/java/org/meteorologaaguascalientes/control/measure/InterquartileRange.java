@@ -6,8 +6,8 @@ package org.meteorologaaguascalientes.control.measure;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import org.meteorologaaguascalientes.model.VariableTimeComparator;
-import org.meteorologaaguascalientes.model.Variable;
+import org.meteorologaaguascalientes.vo.VariableTimeComparator;
+import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
  *
@@ -16,7 +16,7 @@ import org.meteorologaaguascalientes.model.Variable;
 public class InterquartileRange implements Measure{
 
     @Override
-    public double calculate(ArrayList<Variable> data) {
+    public double calculate(ArrayList<VariableVo> data) {
         if(data.size()<4)
             return java.lang.Double.NaN;
         Collections.sort(data,new VariableTimeComparator());

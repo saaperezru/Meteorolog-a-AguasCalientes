@@ -2,19 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.meteorologaaguascalientes.model;
+package org.meteorologaaguascalientes.vo;
 
 /**
  *
  * @author Diego Gerena (SNIPERCAT) <dagerenaq@gmail.com>
  */
-public class Temperature  extends Variable{
+public class TemperatureVo  extends VariableVo{
 
-    public Temperature(double value){
+    public TemperatureVo(double value){
         super.setValue(value);
     }
 
-    public Temperature(){
+    public TemperatureVo(){
         super.setValue(0);
     }
 

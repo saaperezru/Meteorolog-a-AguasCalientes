@@ -1,24 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.meteorologaaguascalientes.dao;
 
-/**
- *
- * @author tuareg
- */
-public abstract class Dao<E> {
+import org.meteorologaaguascalientes.da.DataAccessAdapter;
+import org.meteorologaaguascalientes.da.DataAccessException;
+import org.meteorologaaguascalientes.vo.ValueObject;
 
-	private String visibleName;
+public interface Dao<E, F extends ValueObject> {
 
-	public abstract boolean createRecord(E record);
+    public F insert(DataAccessAdapter<E> adapter, F vo) throws DataAccessException;
 
-	public void setVisibleName(String visibleName) {
-		this.visibleName = visibleName;
-	}
+    public F update(DataAccessAdapter<E> adapter, F vo) throws DataAccessException;
 
-	public String getVisibleName() {
-		return visibleName;
-	}
+    public void delete(DataAccessAdapter<E> adapter, long id) throws DataAccessException;
+
+    public F findById(DataAccessAdapter<E> adapter, long id) throws DataAccessException;
 }

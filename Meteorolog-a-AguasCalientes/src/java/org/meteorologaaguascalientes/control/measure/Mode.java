@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import org.meteorologaaguascalientes.model.Variable;
+import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
  *
@@ -17,7 +17,7 @@ import org.meteorologaaguascalientes.model.Variable;
 public class Mode implements Measure{
 
     @Override
-    public double calculate(ArrayList<Variable> data) {
+    public double calculate(ArrayList<VariableVo> data) {
         if(data.isEmpty())
             return java.lang.Double.NaN;
         Map<Double,Integer> counter=new HashMap<Double, Integer>();

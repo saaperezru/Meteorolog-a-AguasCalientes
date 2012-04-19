@@ -1,16 +1,16 @@
-package org.meteorologaaguascalientes.model;
+package org.meteorologaaguascalientes.vo;
 /**
  *
  * @author Diego Gerena (SNIPERCAT) <dagerenaq@gmail.com>
  */
 
-public class Pluviosity extends Variable {
+public class PluviosityVo extends VariableVo {
 
-    public Pluviosity(double value){
+    public PluviosityVo(double value){
         super.setValue(value);
     }
 
-    public Pluviosity(){
+    public PluviosityVo(){
         super.setValue(0);
     }
 

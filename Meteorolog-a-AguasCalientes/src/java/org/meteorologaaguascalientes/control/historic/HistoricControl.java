@@ -7,8 +7,8 @@ package org.meteorologaaguascalientes.control.historic;
 import java.util.*;
 import org.apache.commons.math3.exception.NoDataException;
 import org.meteorologaaguascalientes.control.forecast.DefaultForecastImpl;
-import org.meteorologaaguascalientes.dao.AbstractVariableDao;
-import org.meteorologaaguascalientes.model.Variable;
+import org.meteorologaaguascalientes.businesslogic.service.AbstractVariableService;
+import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
  *
@@ -16,7 +16,7 @@ import org.meteorologaaguascalientes.model.Variable;
  */
 public class HistoricControl {
     
-    public List<SortedMap<Date, Double>> getData(AbstractVariableDao variableDao) {
+    public List<SortedMap<Date, Double>> getData(AbstractVariableService variableDao) {
         
         List<SortedMap<Date, Double>> data = new ArrayList<SortedMap<Date, Double>>();
         
@@ -27,9 +27,9 @@ public class HistoricControl {
         
         data.add(actualValues);
         
-        ArrayList<Variable> variables = (ArrayList<Variable>) variableDao.getAllValues();
+        ArrayList<VariableVo> variables = (ArrayList<VariableVo>) variableDao.getAllValues();
         
-        for (Variable v : variables) {
+        for (VariableVo v : variables) {
             actualValues.put(v.getTime(), v.getValue());
         }
         try{

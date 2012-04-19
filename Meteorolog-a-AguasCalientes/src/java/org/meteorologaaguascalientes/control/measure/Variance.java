@@ -5,7 +5,7 @@
 package org.meteorologaaguascalientes.control.measure;
 
 import java.util.ArrayList;
-import org.meteorologaaguascalientes.model.Variable;
+import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
  *
@@ -14,7 +14,7 @@ import org.meteorologaaguascalientes.model.Variable;
 public class Variance implements Measure{
 
     @Override
-    public double calculate(ArrayList<Variable> data) {
+    public double calculate(ArrayList<VariableVo> data) {
         if(data.isEmpty())
             return java.lang.Double.NaN;
         double mean = (new Mean()).calculate(data);

@@ -1,4 +1,4 @@
-package org.meteorologaaguascalientes.view;
+package org.meteorologaaguascalientes.presentation;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.meteorologaaguascalientes.control.historic.HistoricControl;
-import org.meteorologaaguascalientes.dao.AbstractVariableDao;
-import org.meteorologaaguascalientes.dao.DaoList;
+import org.meteorologaaguascalientes.businesslogic.service.AbstractVariableService;
+import org.meteorologaaguascalientes.businesslogic.service.ServicesFactory;
 
 @WebServlet(name = "History", urlPatterns = {"/history"})
 public class History extends HttpServlet {
@@ -38,7 +38,7 @@ public class History extends HttpServlet {
             String variableName = request.getParameter("variable");
             if (variableName != null) {
 
-                for (Entry<String, AbstractVariableDao> entry : DaoList.getInstance().getVariablesDaoMap().entrySet()) {
+                for (Entry<String, AbstractVariableService> entry : ServicesFactory.getInstance().getVariablesDaoMap().entrySet()) {
                     if (entry.getKey().equals(variableName)) {
                         List<SortedMap<Date, Double>> dataList;
                         SortedMap<Date, Double> data;
