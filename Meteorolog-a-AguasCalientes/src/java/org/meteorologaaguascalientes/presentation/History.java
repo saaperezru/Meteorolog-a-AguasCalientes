@@ -38,7 +38,7 @@ public class History extends HttpServlet {
             String variableName = request.getParameter("variable");
             if (variableName != null) {
 
-                for (Entry<String, AbstractVariableService> entry : ServicesFactory.getInstance().getVariablesDaoMap().entrySet()) {
+                for (Entry<String, AbstractVariableService> entry : ServicesFactory.getInstance().getVariablesServicesMap().entrySet()) {
                     if (entry.getKey().equals(variableName)) {
                         List<SortedMap<Date, Double>> dataList;
                         SortedMap<Date, Double> data;

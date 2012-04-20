@@ -2,8 +2,7 @@ package org.meteorologaaguascalientes.da;
 
 import javax.persistence.EntityManager;
 import org.meteorologaaguascalientes.dao.AbstractDaoFactory;
-import org.xtremeware.testapp.dao.AbstractDaoFactory;
-import org.xtremeware.testapp.dao.AbstractDaoFactory.DaoFactoryTypes;
+import org.meteorologaaguascalientes.dao.AbstractDaoFactory.DaoFactoryTypes;
 
 public class JpaDataAccess extends DataAccessAdapter<EntityManager> {
 

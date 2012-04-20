@@ -31,14 +31,12 @@ public class ServicesFactory {
         variablesDao.put(PLUVIOSITY, daoV);
 
         daoV = new TemperatureService();
-        variableName = "temperature";
-        daoList.put(variableName, daoV);
-        variablesDao.put(variableName, daoV);
+        daoList.put(TEMPERATURE, daoV);
+        variablesDao.put(TEMPERATURE, daoV);
 
         daoV = new AtmosphericPressureService();
-        variableName = "atmosphericPressure";
-        daoList.put(variableName, daoV);
-        variablesDao.put(variableName, daoV);
+        daoList.put(ATMOSPHERIC_PRESSURE, daoV);
+        variablesDao.put(ATMOSPHERIC_PRESSURE, daoV);
 
     }
 
@@ -46,8 +44,8 @@ public class ServicesFactory {
         return daoList;
     }
 
-    public String[] getVariablesDaoMap() {
-        return VARIABLES_NAMES;
+    public HashMap<String,AbstractVariableService> getVariablesServicesMap() {
+	   return variablesDao;
     }
 
     public static List<AbstractService> getDao() {
@@ -55,7 +53,7 @@ public class ServicesFactory {
     }
 
     public static List<AbstractVariableService> getVariables() {
-        return new ArrayList<AbstractVariableService>(ServicesFactory.getInstance().getVariablesDaoMap().values());
+        return new ArrayList<AbstractVariableService>(ServicesFactory.getInstance().getVariablesServicesMap().values());
     }
     
 

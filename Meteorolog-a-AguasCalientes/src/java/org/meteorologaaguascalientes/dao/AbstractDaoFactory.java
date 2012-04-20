@@ -1,5 +1,6 @@
 package org.meteorologaaguascalientes.dao;
 
+import org.meteorologaaguascalientes.dao.jjpa.JpaDaoFactory;
 import org.meteorologaaguascalientes.da.DataAccessAdapter;
 
 public abstract class AbstractDaoFactory<E extends DataAccessAdapter> {
@@ -11,13 +12,12 @@ public abstract class AbstractDaoFactory<E extends DataAccessAdapter> {
 
 	public static AbstractDaoFactory getDaoFactory(DataAccessAdapter da) {
 		AbstractDaoFactory daoFactory = null;
-		
+
 		if (da.getType() == DaoFactoryTypes.JPA) {
 			daoFactory = JpaDaoFactory.getInstance();
 		}
 		return daoFactory;
 	}
 
-	public abstract AtmosphericPressureDao getUserDao();
-
+	public abstract VariableDao getVariableDao(String VariableType);
 }

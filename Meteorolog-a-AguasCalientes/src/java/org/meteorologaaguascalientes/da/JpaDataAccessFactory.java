@@ -5,6 +5,8 @@ import javax.persistence.Persistence;
 
 public class JpaDataAccessFactory implements AbstractDataAccessFactory {
 
+	public static String PERSISTENCE_UNIT = "AAAA";
+	
 	private String persistenceUnit;
 	private EntityManagerFactory EMFactory;
 

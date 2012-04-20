@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.meteorologaaguascalientes.control.measure.Measure;
 import org.meteorologaaguascalientes.businesslogic.service.AbstractVariableService;
 import org.meteorologaaguascalientes.businesslogic.service.ServicesFactory;
+import org.meteorologaaguascalientes.da.DataAccessException;
+import org.meteorologaaguascalientes.da.JpaDataAccess;
+import org.meteorologaaguascalientes.da.JpaDataAccessFactory;
 import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
@@ -23,7 +28,7 @@ public class ReportsControl {
     public Map<String,Double> getReport(Measure measure){
         
         Map<String,Double> Values = new HashMap<String,Double>(); // Will store the value returned by measure.calculate() for each variable in the list
-        HashMap<String,AbstractVariableService> VariablesList = ServicesFactory.getInstance().getVariablesDaoMap(); // Stores the list of variables returned by the ServicesFactory
+        HashMap<String,AbstractVariableService> VariablesList = ServicesFactory.getInstance().getVariablesServicesMap(); // Stores the list of variables returned by the ServicesFactory
         ArrayList<VariableVo> DaoData; // Will store the data returned by each Dao with the method getAllValues();
         double result; // Will store the result returned by measure.calculate()
         
@@ -32,10 +37,15 @@ public class ReportsControl {
          * Then calculate the measure
          * and add it to the map
          */
+	JpaDataAccessFactory da = new JpaDataAccessFactory(JpaDataAccessFactory.PERSISTENCE_UNIT);
         for(String i : VariablesList.keySet()){
-            DaoData = (ArrayList<VariableVo>) VariablesList.get(i).getAllValues();
-            result = measure.calculate(DaoData);
-            Values.put(i , result);
+			try {
+				DaoData = (ArrayList<VariableVo>) VariablesList.get(i).getAllValues(da.createDataAccess());
+				result = measure.calculate(DaoData);
+				Values.put(i , result);
+			} catch (DataAccessException ex) {
+				Logger.getLogger(ReportsControl.class.getName()).log(Level.SEVERE, null, ex);
+			}
         }
         
         return Values;
