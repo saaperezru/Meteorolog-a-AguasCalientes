@@ -5,7 +5,7 @@
 package org.meteorologaaguascalientes.control.measure;
 
 import java.util.ArrayList;
-import org.meteorologaaguascalientes.model.Variable;
+import org.meteorologaaguascalientes.model.vo.Variable;
 
 /**
  *

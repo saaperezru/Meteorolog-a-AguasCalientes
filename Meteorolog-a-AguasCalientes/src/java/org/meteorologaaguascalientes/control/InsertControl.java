@@ -11,11 +11,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.meteorologaaguascalientes.dao.Dao;
-import org.meteorologaaguascalientes.dao.DaoList;
-import org.meteorologaaguascalientes.model.AtmosphericPressure;
-import org.meteorologaaguascalientes.model.Pluviosity;
-import org.meteorologaaguascalientes.model.Sample;
-import org.meteorologaaguascalientes.model.Temperature;
+import org.meteorologaaguascalientes.dao.DaoFactory;
+import org.meteorologaaguascalientes.model.vo.AtmosphericPressure;
+import org.meteorologaaguascalientes.model.vo.Pluviosity;
+import org.meteorologaaguascalientes.model.vo.Sample;
+import org.meteorologaaguascalientes.model.vo.Temperature;
 
 /**
  *
@@ -34,7 +34,7 @@ public class InsertControl {
            return false;
         
         //Load data base
-        HashMap<String, Dao> database = DaoList.getInstance().getDaoMap();
+        HashMap<String, Dao> database = DaoFactory.getInstance().getDaoMap();
         
         //checking time
         String timestring = data.get("sample");

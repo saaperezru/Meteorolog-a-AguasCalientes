@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.meteorologaaguascalientes.model;
+package org.meteorologaaguascalientes.helpers;
 
 import java.util.Comparator;
-import org.meteorologaaguascalientes.model.Variable;
+import org.meteorologaaguascalientes.model.vo.Variable;
 
 /**
  *
@@ -15,7 +15,9 @@ public class VariableTimeComparator implements Comparator<Variable> {
 
     @Override
     public int compare(Variable t, Variable t1) {
-        return t.getTime().compareTo(t1.getTime());
+        if(t == null || t1 == null)
+            throw new NullPointerException("The variables cannot be null");
+        return t.getSample().getTime().compareTo(t1.getSample().getTime());
     }
     
 }

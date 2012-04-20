@@ -8,7 +8,7 @@ import java.util.*;
 import org.apache.commons.math3.exception.NoDataException;
 import org.meteorologaaguascalientes.control.forecast.DefaultForecastImpl;
 import org.meteorologaaguascalientes.dao.AbstractVariableDao;
-import org.meteorologaaguascalientes.model.Variable;
+import org.meteorologaaguascalientes.model.vo.Variable;
 
 /**
  *

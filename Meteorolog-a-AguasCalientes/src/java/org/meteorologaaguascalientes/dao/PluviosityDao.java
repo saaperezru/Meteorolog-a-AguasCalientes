@@ -4,23 +4,20 @@
  */
 package org.meteorologaaguascalientes.dao;
 
-import org.meteorologaaguascalientes.model.Pluviosity;
+import org.meteorologaaguascalientes.model.vo.Pluviosity;
 
 /**
  *
  * @author tuareg
  */
-public class PluviosityDao extends AbstractVariableDao<Pluviosity>{
+public class PluviosityDao extends AbstractVariableDao<Pluviosity> {
+    
+    private static PluviosityDao instance;
 
-	@Override
-	public boolean createRecord(Pluviosity record) {
-		boolean add = data.add(record);
-		if (lastRecord == null || (lastRecord.getTime().compareTo(record.getTime()))<=0){
-			lastRecord = record;
-		}
-		return true;
-	}
-
-	
-	
+    public synchronized static PluviosityDao getInstance() {
+        if (instance == null) {
+            instance = new PluviosityDao();
+        }
+        return instance;
+    }
 }

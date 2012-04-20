@@ -1,3 +1,4 @@
+<%@page import="org.meteorologaaguascalientes.control.ServiceFacade"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="org.meteorologaaguascalientes.control.InsertControl"%>
@@ -20,8 +21,8 @@
 %>
 <%
     // InsertControl invocation
-    InsertControl insertControl = new InsertControl();
-    success = insertControl.insertValues(values);
+    ServiceFacade serviceFacade = new ServiceFacade();
+    success = serviceFacade.insertValues(values);
     
     Gson g = new Gson();
     JsonObject object = new JsonObject();

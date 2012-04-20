@@ -4,20 +4,20 @@
  */
 package org.meteorologaaguascalientes.dao;
 
-import org.meteorologaaguascalientes.model.Temperature;
+import org.meteorologaaguascalientes.model.vo.Temperature;
+
 /**
  *
  * @author tuareg
  */
 public class TemperatureDao extends AbstractVariableDao<Temperature> {
+    
+    private static TemperatureDao instance;
 
-	@Override
-	public boolean createRecord(Temperature record) {
-		boolean add = data.add(record);
-		if (lastRecord == null || (lastRecord.getTime().compareTo(record.getTime()))<=0){
-			lastRecord = record;
-		}
-		return true;
-	}
-	
+    public synchronized static TemperatureDao getInstance() {
+        if (instance == null) {
+            instance = new TemperatureDao();
+        }
+        return instance;
+    }
 }

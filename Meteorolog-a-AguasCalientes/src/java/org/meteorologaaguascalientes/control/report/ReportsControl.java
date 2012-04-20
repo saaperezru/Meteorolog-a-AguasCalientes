@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import org.meteorologaaguascalientes.control.measure.Measure;
 import org.meteorologaaguascalientes.dao.AbstractVariableDao;
-import org.meteorologaaguascalientes.dao.DaoList;
-import org.meteorologaaguascalientes.model.Variable;
+import org.meteorologaaguascalientes.dao.DaoFactory;
+import org.meteorologaaguascalientes.model.vo.Variable;
 
 /**
  *
@@ -23,7 +23,7 @@ public class ReportsControl {
     public Map<String,Double> getReport(Measure measure){
         
         Map<String,Double> Values = new HashMap<String,Double>(); // Will store the value returned by measure.calculate() for each variable in the list
-        HashMap<String,AbstractVariableDao> VariablesList = DaoList.getInstance().getVariablesDaoMap(); // Stores the list of variables returned by the DaoList
+        HashMap<String,AbstractVariableDao> VariablesList = DaoFactory.getInstance().getVariablesDaoMap(); // Stores the list of variables returned by the DaoFactory
         ArrayList<Variable> DaoData; // Will store the data returned by each Dao with the method getAllValues();
         double result; // Will store the result returned by measure.calculate()
         

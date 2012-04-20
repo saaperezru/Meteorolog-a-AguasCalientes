@@ -4,7 +4,7 @@
  */
 package org.meteorologaaguascalientes.dao;
 
-import org.meteorologaaguascalientes.model.AtmosphericPressure;
+import org.meteorologaaguascalientes.model.vo.AtmosphericPressure;
 
 /**
  *
@@ -12,12 +12,12 @@ import org.meteorologaaguascalientes.model.AtmosphericPressure;
  */
 public class AtmosphericPressureDao extends AbstractVariableDao<AtmosphericPressure> {
 
-	@Override
-	public boolean createRecord(AtmosphericPressure record) {
-		boolean add = data.add(record);
-		if (lastRecord == null || (lastRecord.getTime().compareTo(record.getTime()))<=0){
-			lastRecord = record;
-		}
-		return true;
-	}
+    private static AtmosphericPressureDao instance;
+
+    public synchronized static AtmosphericPressureDao getInstance() {
+        if (instance == null) {
+            instance = new AtmosphericPressureDao();
+        }
+        return instance;
+    }
 }

@@ -8,17 +8,7 @@ package org.meteorologaaguascalientes.dao;
  *
  * @author tuareg
  */
-public abstract class Dao<E> {
+public interface Dao<E> {
 
-	private String visibleName;
-
-	public abstract boolean createRecord(E record);
-
-	public void setVisibleName(String visibleName) {
-		this.visibleName = visibleName;
-	}
-
-	public String getVisibleName() {
-		return visibleName;
-	}
+    public abstract boolean createRecord(E record);
 }
