@@ -11,7 +11,6 @@
 <%
     Properties prop = new Properties();
     prop.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
-    DaoList daoList = DaoList.getInstance();
     Map<String,Dao> daoMap = DaoList.getInstance().getDaoMap();
     Map<String,AbstractVariableDao> variableList = daoList.getVariablesDaoMap();
 %>

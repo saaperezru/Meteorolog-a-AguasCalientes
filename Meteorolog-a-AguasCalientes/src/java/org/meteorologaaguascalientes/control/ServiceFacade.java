@@ -7,10 +7,7 @@ package org.meteorologaaguascalientes.control;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-import org.meteorologaaguascalientes.dao.Dao;
-import org.meteorologaaguascalientes.dao.DaoFactory;
 import org.meteorologaaguascalientes.model.service.ServiceFactory;
 import org.meteorologaaguascalientes.model.vo.AtmosphericPressure;
 import org.meteorologaaguascalientes.model.vo.Pluviosity;
@@ -31,7 +28,7 @@ public class ServiceFacade {
            return false;
         
         //checking time
-        String timestring = data.get("sample");
+        String timestring = data.remove("sample");
         Date time;
         try{
             time = (new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa")).parse(timestring);
