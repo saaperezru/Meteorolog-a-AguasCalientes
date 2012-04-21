@@ -15,6 +15,9 @@ import java.util.List;
 public class MeasuresList {
 
     private static MeasuresList measuresList = null;
+    
+    private HashMap<String, HashMap> measuresLists = null;
+    
     private HashMap<String, Measure> centralTendencyMeasures = null;
     private HashMap<String, Measure> spreadMeasures = null;
 
