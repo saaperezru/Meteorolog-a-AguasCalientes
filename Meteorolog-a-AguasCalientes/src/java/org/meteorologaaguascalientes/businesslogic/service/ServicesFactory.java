@@ -19,43 +19,35 @@ public class ServicesFactory {
     public static final String TEMPERATURE = "temperature";
     public static final String[] VARIABLES_NAMES = {PLUVIOSITY,ATMOSPHERIC_PRESSURE,TEMPERATURE};
 
-
-    private HashMap<String, AbstractService> daoList = new HashMap<String, AbstractService>();
-    private HashMap<String, AbstractVariableService> variablesDao = new HashMap<String, AbstractVariableService>();
+    private HashMap<String, AbstractVariableService> variablesService = new HashMap<String, AbstractVariableService>();
     private static ServicesFactory instance;
 
     private ServicesFactory() {
 
         AbstractVariableService daoV = new PluviosityService();
-        daoList.put(PLUVIOSITY, daoV);
-        variablesDao.put(PLUVIOSITY, daoV);
+        variablesService.put(PLUVIOSITY, daoV);
 
         daoV = new TemperatureService();
-        daoList.put(TEMPERATURE, daoV);
-        variablesDao.put(TEMPERATURE, daoV);
+        variablesService.put(TEMPERATURE, daoV);
 
         daoV = new AtmosphericPressureService();
-        daoList.put(ATMOSPHERIC_PRESSURE, daoV);
-        variablesDao.put(ATMOSPHERIC_PRESSURE, daoV);
+        variablesService.put(ATMOSPHERIC_PRESSURE, daoV);
 
-    }
-
-    public HashMap<String, AbstractService> getDaoMap() {
-        return daoList;
     }
 
     public HashMap<String,AbstractVariableService> getVariablesServicesMap() {
-	   return variablesDao;
+	   return variablesService;
     }
 
-    public static List<AbstractService> getDao() {
-        return new ArrayList<AbstractService>(ServicesFactory.getInstance().getDaoMap().values());
-    }
-
-    public static List<AbstractVariableService> getVariables() {
+    public static List<AbstractVariableService> getVariablesServices() {
         return new ArrayList<AbstractVariableService>(ServicesFactory.getInstance().getVariablesServicesMap().values());
     }
     
+    public AbstractVariableService getVariableServiceByKey(String key){
+        if(key == null)
+            return null;
+        return variablesService.get(key);
+    }
 
     public synchronized static ServicesFactory getInstance() {
 

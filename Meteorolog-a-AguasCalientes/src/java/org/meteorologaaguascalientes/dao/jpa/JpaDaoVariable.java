@@ -1,5 +1,5 @@
 
-package org.meteorologaaguascalientes.dao.jjpa;
+package org.meteorologaaguascalientes.dao.jpa;
 
 import java.util.List;
 import javax.persistence.EntityManager;

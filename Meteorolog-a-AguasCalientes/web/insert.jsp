@@ -1,9 +1,8 @@
+<%@page import="org.meteorologaaguascalientes.businesslogic.facade.ServiceFacade"%>
+<%@page import="org.meteorologaaguascalientes.businesslogic.service.ServicesFactory"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="com.google.gson.JsonObject"%>
-<%@page import="org.meteorologaaguascalientes.control.InsertControl"%>
 <%@page import="java.util.Map.Entry"%>
-<%@page import="org.meteorologaaguascalientes.dao.DaoList"%>
-<%@page import="org.meteorologaaguascalientes.dao.Dao"%>
 <%@page import="java.util.*"%>
 <%@page contentType="text/json" pageEncoding="UTF-8"%>
 <%! boolean success = false;
@@ -11,17 +10,17 @@
 <%
     Map<String, String> values = new HashMap<String, String>();
     String value;
-    for (Entry<String,Dao> entry : DaoList.getInstance().getDaoMap().entrySet()) {
-        value = request.getParameter(entry.getKey());
+    for (String key : ServicesFactory.VARIABLES_NAMES) {
+        value = request.getParameter(key);
         if (value != null) {
-            values.put(entry.getKey(), value);
+            values.put(key, value);
         }
     }
 %>
 <%
     // InsertControl invocation
-    InsertControl insertControl = new InsertControl();
-    success = insertControl.insertValues(values);
+    ServiceFacade serviceFacade = new ServiceFacade();
+    success = serviceFacade.insertValues(values, request.getParameter("sample"));
     
     Gson g = new Gson();
     JsonObject object = new JsonObject();

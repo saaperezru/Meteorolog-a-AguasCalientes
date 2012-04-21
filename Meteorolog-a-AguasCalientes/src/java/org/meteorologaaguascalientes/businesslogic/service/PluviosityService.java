@@ -13,12 +13,10 @@ import org.meteorologaaguascalientes.vo.PluviosityVo;
  *
  * @author tuareg
  */
-public class PluviosityService extends AbstractVariableService<PluviosityVo>{
+public class PluviosityService extends AbstractVariableService<PluviosityVo> {
 
-	@Override
-	protected VariableDao<?, PluviosityVo> getDao(DataAccessAdapter dataAccess) {
-		return AbstractDaoFactory.getDaoFactory(dataAccess).getVariableDao(ServicesFactory.PLUVIOSITY);
-	}
-
-	
+    @Override
+    protected VariableDao<?, PluviosityVo> getDao(DataAccessAdapter dataAccess) {
+        return AbstractDaoFactory.getDaoFactory(dataAccess).getVariableDao(ServicesFactory.PLUVIOSITY);
+    }
 }

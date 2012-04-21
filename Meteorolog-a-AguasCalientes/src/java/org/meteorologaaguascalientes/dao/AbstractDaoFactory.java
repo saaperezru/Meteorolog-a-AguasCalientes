@@ -1,23 +1,23 @@
 package org.meteorologaaguascalientes.dao;
 
-import org.meteorologaaguascalientes.dao.jjpa.JpaDaoFactory;
+import org.meteorologaaguascalientes.dao.jpa.JpaDaoFactory;
 import org.meteorologaaguascalientes.da.DataAccessAdapter;
 
 public abstract class AbstractDaoFactory<E extends DataAccessAdapter> {
 
-	public static enum DaoFactoryTypes {
+    public static enum DaoFactoryTypes {
 
-		JPA
-	}
+        JPA
+    }
 
-	public static AbstractDaoFactory getDaoFactory(DataAccessAdapter da) {
-		AbstractDaoFactory daoFactory = null;
+    public static AbstractDaoFactory getDaoFactory(DataAccessAdapter da) {
+        AbstractDaoFactory daoFactory = null;
 
-		if (da.getType() == DaoFactoryTypes.JPA) {
-			daoFactory = JpaDaoFactory.getInstance();
-		}
-		return daoFactory;
-	}
+        if (da.getType() == DaoFactoryTypes.JPA) {
+            daoFactory = JpaDaoFactory.getInstance();
+        }
+        return daoFactory;
+    }
 
-	public abstract VariableDao getVariableDao(String VariableType);
+    public abstract VariableDao getVariableDao(String VariableType);
 }

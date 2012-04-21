@@ -4,32 +4,32 @@ import org.meteorologaaguascalientes.dao.AbstractDaoFactory.DaoFactoryTypes;
 
 public abstract class DataAccessAdapter<E> {
 
-	E dataAccess;
+    E dataAccess;
 
-	public DataAccessAdapter(E dataAccess) {
-		checkDataAccessClass(dataAccess);
-		this.dataAccess = dataAccess;
-	}
+    public DataAccessAdapter(E dataAccess) {
+        checkDataAccessClass(dataAccess);
+        this.dataAccess = dataAccess;
+    }
 
-	public E getDataAccess() {
-		return dataAccess;
-	}
+    public E getDataAccess() {
+        return dataAccess;
+    }
 
-	protected abstract void checkDataAccessClass(E dataAccess);
+    protected abstract void checkDataAccessClass(E dataAccess);
 
-	protected void checkDataAccessNotNull() {
-		if (dataAccess == null) {
-			throw new IllegalStateException("The data access object is null");
-		}
-	}
+    protected void checkDataAccessNotNull() {
+        if (dataAccess == null) {
+            throw new IllegalStateException("The data access object is null");
+        }
+    }
 
-	public abstract void beginTransaction() throws DataAccessException;
+    public abstract void beginTransaction() throws DataAccessException;
 
-	public abstract void commit() throws DataAccessException ;
+    public abstract void commit() throws DataAccessException;
 
-	public abstract void rollback() throws DataAccessException;
+    public abstract void rollback() throws DataAccessException;
 
-	public abstract void close() throws DataAccessException;
+    public abstract void close() throws DataAccessException;
 
-	public abstract DaoFactoryTypes getType();
+    public abstract DaoFactoryTypes getType();
 }

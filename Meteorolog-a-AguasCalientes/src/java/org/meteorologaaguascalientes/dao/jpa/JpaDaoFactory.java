@@ -1,4 +1,4 @@
-package org.meteorologaaguascalientes.dao.jjpa;
+package org.meteorologaaguascalientes.dao.jpa;
 
 import java.util.HashMap;
 import org.meteorologaaguascalientes.businesslogic.service.ServicesFactory;

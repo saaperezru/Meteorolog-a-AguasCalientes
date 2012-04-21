@@ -1,9 +1,6 @@
-<%@page import="java.util.Map.Entry"%>
-<%@page import="java.util.Map"%>
+<%@page import="org.meteorologaaguascalientes.businesslogic.service.ServicesFactory"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.MeasuresList"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
-<%@page import="org.meteorologaaguascalientes.dao.DaoList"%>
-<%@page import="org.meteorologaaguascalientes.dao.AbstractVariableDao"%>
 <%@page import="org.meteorologaaguascalientes.dao.Dao"%>
 <%@page import="java.util.Properties"%>
 <%@page import="java.util.List"%>
@@ -11,9 +8,6 @@
 <%
     Properties prop = new Properties();
     prop.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
-    DaoList daoList = DaoList.getInstance();
-    Map<String,Dao> daoMap = DaoList.getInstance().getDaoMap();
-    Map<String,AbstractVariableDao> variableList = daoList.getVariablesDaoMap();
 %>
 <!DOCTYPE html>
 <html>
@@ -36,9 +30,9 @@
                 jQuery("#variable input[type=radio]").click(function(){
                     var j = jQuery(this);
                     if(g != null) {
-	                g.updateOptions({file: "history?variable=" + j.val()});
+                        g.updateOptions({file: "history?variable=" + j.val()});
                     } else {
-                    	g = new Dygraph(document.getElementById("dygraph"), "history?variable=" + j.val(), {animatedZooms: true});
+                        g = new Dygraph(document.getElementById("dygraph"), "history?variable=" + j.val(), {animatedZooms: true});
                     }
                 });
                 jQuery("#variable input[type=radio]:first").click();
@@ -104,33 +98,38 @@
                         <tr>
                             <th>&nbsp;</th>
                             <%
-                                for (Entry<String,Dao> entry : daoMap.entrySet()) {
+                                for (String key : ServicesFactory.VARIABLES_NAMES) {
                             %>
-                            <th><%= prop.getProperty("dao." + entry.getKey())%> [<%= prop.getProperty("dao." + entry.getKey() + ".extra")%>]</th>
+                            <th><%= prop.getProperty(key)%> [<%= prop.getProperty(key + ".extra")%>]</th>
                             <%}%>
+                            <th><%= prop.getProperty("sample")%> [<%= prop.getProperty("sample.extra")%>]</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Último valor</td>
                             <%
-                                for (Entry<String,Dao> entry : daoMap.entrySet()) {
+                                for (String key : ServicesFactory.VARIABLES_NAMES) {
                             %>
-                            <td id="<%= entry.getKey()%>LastValue">-</td>
+                            <td id="<%= key%>LastValue">-</td>
                             <%}%>
+                            <td id="<%= "sample"%>LastValue">-</td>
                         </tr>
                         <tr>
                             <td>Nuevo valor</td>
                             <%
-                                for (Entry<String,Dao> entry : daoMap.entrySet()) {
+                                for (String key : ServicesFactory.VARIABLES_NAMES) {
                             %>
                             <td>        
-                                <input type="text" name="<%= entry.getKey()%>" required="required" />
+                                <input type="text" name="<%= key%>" required="required" />
                             </td>
                             <%}%>
+                            <td>        
+                                <input type="text" name="<%= "sample"%>" required="required" />
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="<%= daoMap.size()%>" id="message" style="text-align: right;"></td>
+                            <td colspan="<%= ServicesFactory.VARIABLES_NAMES.length%>" id="message" style="text-align: right;"></td>
                             <td style="text-align: right;"><input type="submit" value="Enviar"/></td>
                         </tr>
                     </tbody>
@@ -146,9 +145,9 @@
                     <form id="historyForm" action="history.jsp" method="get">
                         <div id="variable">
                             <%
-                                for (Entry<String,AbstractVariableDao> entry : variableList.entrySet()) {
+                                for (String key : ServicesFactory.VARIABLES_NAMES) {
                             %>
-                            <input type="radio" name="variable" id="variable<%= entry.getKey()%>" value="<%= entry.getKey()%>"><label for="variable<%= entry.getKey()%>"><%= prop.getProperty("dao." + entry.getKey())%> [<%= prop.getProperty("dao." + entry.getKey() + ".extra")%>]</label></input>
+                            <input type="radio" name="variable" id="variable<%= key%>" value="<%= key%>"><label for="variable<%= key%>"><%= prop.getProperty(key)%> [<%= prop.getProperty(key + ".extra")%>]</label></input>
                             <%        }
                             %>
                         </div>
@@ -162,9 +161,9 @@
                             <tr>
                                 <th>Medida</th>
                                 <%
-                                    for (Entry<String,AbstractVariableDao> entry : variableList.entrySet()) {
+                                    for (String key : ServicesFactory.VARIABLES_NAMES) {
                                 %>
-                                <th><%= prop.getProperty("dao." + entry.getKey())%> [<%= prop.getProperty("dao." + entry.getKey() + ".extra")%>]</th>
+                                <th><%= prop.getProperty(key)%> [<%= prop.getProperty(key + ".extra")%>]</th>
                                 <%        }
                                 %>
                             </tr>
@@ -185,9 +184,9 @@
                                 </td>
                         <div id="variable">
                             <%
-                                for (Entry<String,AbstractVariableDao> entry : variableList.entrySet()) {
+                                for (String key : ServicesFactory.VARIABLES_NAMES) {
                             %>
-                            <td id="<%= entry.getKey()%>CentralTendency">-</td>
+                            <td id="<%= key%>CentralTendency">-</td>
                             <%        }
                             %>
                             </tr>
@@ -205,9 +204,9 @@
                                     </select>
                                 </td>
                                 <%
-                                    for (Entry<String,AbstractVariableDao> entry : variableList.entrySet()) {
+                                    for (String key : ServicesFactory.VARIABLES_NAMES) {
                                 %>
-                                <td id="<%= entry.getKey()%>Spread">-</td>
+                                <td id="<%= key%>Spread">-</td>
                                 <%        }
                                 %>
                             </tr>
