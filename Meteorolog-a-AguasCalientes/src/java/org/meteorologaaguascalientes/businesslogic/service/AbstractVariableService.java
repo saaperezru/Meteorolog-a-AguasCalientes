@@ -26,7 +26,6 @@ public abstract class AbstractVariableService<E extends VariableVo> extends Abst
 		return getDao(dataAccess).getAllValues(dataAccess);
 	}
 
-	@Override
 	protected VariableDao<?, E> getDao(DataAccessAdapter dataAccess){
 		return AbstractDaoFactory.getDaoFactory(dataAccess).getVariableDao(getVariableId());
 	}

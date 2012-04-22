@@ -10,7 +10,7 @@ public interface Dao<E, F extends ValueObject> {
 
     public F update(DataAccessAdapter<E> adapter, F vo) throws DataAccessException;
 
-    public void delete(DataAccessAdapter<E> adapter, long id) throws DataAccessException;
+    public void delete(DataAccessAdapter<E> adapter, Object id) throws DataAccessException;
 
-    public F findById(DataAccessAdapter<E> adapter, long id) throws DataAccessException;
+    public F findById(DataAccessAdapter<E> adapter, Object id) throws DataAccessException;
 }

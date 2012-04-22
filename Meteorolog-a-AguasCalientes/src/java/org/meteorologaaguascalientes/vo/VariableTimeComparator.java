@@ -5,7 +5,6 @@
 package org.meteorologaaguascalientes.vo;
 
 import java.util.Comparator;
-import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
  *
