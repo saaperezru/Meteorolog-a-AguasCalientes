@@ -17,10 +17,7 @@
     String measureName = request.getParameter("measure");
     if (measureName != null) {
         MeasuresList measuresList = MeasuresList.getInstance();
-        Measure measure = measuresList.getCentralTendencyMeasure(measureName);
-        if (measure == null) {
-            measure = measuresList.getSpreadMeasure(measureName);
-        }
+        Measure measure = measuresList.getMeasure(measureName);
         if (measure != null) {
 %>
 <%
