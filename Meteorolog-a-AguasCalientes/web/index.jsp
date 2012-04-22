@@ -169,12 +169,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <%
+                                for (String typeKey : MeasuresList.getInstance().getMeasuresTypes()) {
+                            %>
                             <tr>
                                 <td>
-                                    <select id="centralTendency">
+                                    <select id="<%= typeKey%>">
                                         <option value=""></option>
                                         <%
-                                            for (String key : MeasuresList.getInstance().getCentralTendencyMeasuresKeys()) {
+                                            for (String key : MeasuresList.getInstance().getMeasuresKeys(typeKey)) {
                                         %>
                                         <option value="<%=key%>"><%= prop.getProperty("measure." + key)%></option>
                                         <%
@@ -186,30 +189,12 @@
                             <%
                                 for (String key : ServicesFactory.VARIABLES_NAMES) {
                             %>
-                            <td id="<%= key%>CentralTendency">-</td>
-                            <%        }
+                            <td id="<%= key + typeKey.replaceFirst(typeKey.substring(0, 1),typeKey.substring(0, 1).toUpperCase())%>">-</td>
+                            <%  
+                                }
                             %>
                             </tr>
-                            <tr>
-                                <td>
-                                    <select id="spread">
-                                        <option value=""></option>
-                                        <%
-                                            for (String key : MeasuresList.getInstance().getSpreadMeasuresKeys()) {
-                                        %>
-                                        <option value="<%=key%>"><%= prop.getProperty("measure." + key)%></option>
-                                        <%
-                                            }
-                                        %>
-                                    </select>
-                                </td>
-                                <%
-                                    for (String key : ServicesFactory.VARIABLES_NAMES) {
-                                %>
-                                <td id="<%= key%>Spread">-</td>
-                                <%        }
-                                %>
-                            </tr>
+                            <% }%>
                             </tbody>
                     </table>
                 </div>
