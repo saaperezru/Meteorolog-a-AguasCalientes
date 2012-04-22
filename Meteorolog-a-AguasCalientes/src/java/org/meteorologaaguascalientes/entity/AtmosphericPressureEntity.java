@@ -1,11 +1,17 @@
 package org.meteorologaaguascalientes.entity;
 
-import javax.persistence.Entity;
+import org.meteorologaaguascalientes.helper.VariablesVoFactory;
+import org.meteorologaaguascalientes.vo.AtmosphericPressureVo;
 
 /**
  *
  * @author jdbermeol
  */
-@Entity
-public class AtmosphericPressureEntity extends VariableMappedSuperclass {
+@javax.persistence.Entity(name = "AtmosphericPressure")
+public class AtmosphericPressureEntity extends VariableMappedSuperclass<AtmosphericPressureVo> {
+
+    @Override
+    public AtmosphericPressureVo getVo() {
+        return (AtmosphericPressureVo)VariablesVoFactory.getVo(VariablesVoFactory.ATMOSPHERIC_PRESSURE);
+    }
 }

@@ -13,13 +13,14 @@ import org.meteorologaaguascalientes.vo.VariableVo;
  * @author Administrator
  */
 @MappedSuperclass
-public class VariableMappedSuperclass<E extends VariableVo> implements Serializable, Entity<E> {
+public abstract class VariableMappedSuperclass<E extends VariableVo> implements Serializable, Entity<E> {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Temporal(javax.persistence.TemporalType.DATE)
-    @Column(name="sampleTime", nullable = false)
+    @Column(name = "sampleTime", nullable = false)
     private Date time;
-    @Column(name="sample", nullable = false)
+    @Column(name = "sample", nullable = false)
     private double value;
 
     public VariableMappedSuperclass() {
@@ -71,12 +72,14 @@ public class VariableMappedSuperclass<E extends VariableVo> implements Serializa
     public String toString() {
         return "VariableMappedSuperclass{" + "time=" + time + ", value=" + value + '}';
     }
-    
+
     @Override
-    public E toVo() { 
-        VariableVo variableVo = new VariableVo();
-        variableVo.setTime(this.getTime());
-        variableVo.setValue(this.getValue());
-        return (E)variableVo;
+    public E toVo() {
+        E e = getVo();
+        e.setTime(this.getTime());
+        e.setValue(this.getValue());
+        return e;
     }
+    
+    public abstract E getVo();
 }
