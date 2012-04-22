@@ -36,57 +36,69 @@
                     }
                 });
                 jQuery("#variable input[type=radio]:first").click();
-                jQuery("#centralTendency").change(function(){
-                    getReport(jQuery(this), "CentralTendency");
-                });
-                jQuery("#spread").change(function(){
-                    getReport(jQuery(this), "Spread");
-                });
-                var f = jQuery("#insertForm");
-                f.submit(function(){
-                    jQuery.post(f.attr("action"), f.serialize(), function(data){
-                        var m = jQuery("#message");
-                        m.removeClass("success");
-                        m.removeClass("error");
-                        if(data.success){
-                            m.html("Inserción exitosa");
-                            m.addClass("success");
-                            updateGraph();
-                            getLastValues();
-                        } else {
-                            m.html("Error en la inserción");
-                            m.addClass("error");
-                        }
+//                jQuery("#centralTendency").change(function(){
+//                    getReport(jQuery(this), "CentralTendency");
+//                });
+//                jQuery("#spread").change(function(){
+//                    getReport(jQuery(this), "Spread");
+//                });
+                
+            <%
+                for (String typeKey : MeasuresList.getInstance().getMeasuresTypes()) {
+            %>
+                    
+                jQuery("#<%=typeKey%>").change(function(){
+                    getReport(jQuery(this), "<%=typeKey.replaceFirst(typeKey.substring(0, 1), typeKey.substring(0, 1).toUpperCase())%>");
+                });    
+                    
+            <%                        }
+            %>
+                
+                    var f = jQuery("#insertForm");
+                    f.submit(function(){
+                        jQuery.post(f.attr("action"), f.serialize(), function(data){
+                            var m = jQuery("#message");
+                            m.removeClass("success");
+                            m.removeClass("error");
+                            if(data.success){
+                                m.html("Inserción exitosa");
+                                m.addClass("success");
+                                updateGraph();
+                                getLastValues();
+                            } else {
+                                m.html("Error en la inserción");
+                                m.addClass("error");
+                            }
+                        });
+                        return false;
                     });
-                    return false;
+                    getLastValues();
                 });
-                getLastValues();
-            });
             
-            function updateGraph(){
-                jQuery("#variable input[type=radio]:checked").click();
-            }
+                function updateGraph(){
+                    jQuery("#variable input[type=radio]:checked").click();
+                }
             
-            function getLastValues() {
-                jQuery.get("lastValues.jsp", function(data){
-                    for(var i in data){
-                        jQuery("#" + data[i].name + "LastValue").html(data[i].value);
-                    }
-                });
-            }
-            
-            function getReport(j, suffix){
-                var measure = j.val();
-                if("" == measure){
-                    jQuery("td[id$='" + suffix + "']").html("-");
-                } else {
-                    jQuery.get("report.jsp?measure=" + measure, function(data){
+                function getLastValues() {
+                    jQuery.get("lastValues.jsp", function(data){
                         for(var i in data){
-                            jQuery("#" + data[i].name + suffix).html(data[i].value);
+                            jQuery("#" + data[i].name + "LastValue").html(data[i].value);
                         }
                     });
                 }
-            }
+            
+                function getReport(j, suffix){
+                    var measure = j.val();
+                    if("" == measure){
+                        jQuery("td[id$='" + suffix + "']").html("-");
+                    } else {
+                        jQuery.get("report.jsp?measure=" + measure, function(data){
+                            for(var i in data){
+                                jQuery("#" + data[i].name + suffix).html(data[i].value);
+                            }
+                        });
+                    }
+                }
         </script>
     </head>
     <body>
@@ -189,8 +201,8 @@
                             <%
                                 for (String key : ServicesFactory.VARIABLES_NAMES) {
                             %>
-                            <td id="<%= key + typeKey.replaceFirst(typeKey.substring(0, 1),typeKey.substring(0, 1).toUpperCase())%>">-</td>
-                            <%  
+                            <td id="<%= key + typeKey.replaceFirst(typeKey.substring(0, 1), typeKey.substring(0, 1).toUpperCase())%>">-</td>
+                            <%
                                 }
                             %>
                             </tr>
