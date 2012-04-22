@@ -4,10 +4,7 @@
  */
 package org.meteorologaaguascalientes.businesslogic.service;
 
-import org.meteorologaaguascalientes.da.DataAccessAdapter;
-import org.meteorologaaguascalientes.da.JpaDataAccessFactory;
-import org.meteorologaaguascalientes.dao.AbstractDaoFactory;
-import org.meteorologaaguascalientes.dao.VariableDao;
+import org.meteorologaaguascalientes.helper.VariablesVoFactory;
 import org.meteorologaaguascalientes.vo.TemperatureVo;
 /**
  *
@@ -16,12 +13,9 @@ import org.meteorologaaguascalientes.vo.TemperatureVo;
 public class TemperatureService extends AbstractVariableService<TemperatureVo> {
 
 	@Override
-	protected VariableDao<?, TemperatureVo> getDao(DataAccessAdapter dataAccess) {
-		return AbstractDaoFactory.getDaoFactory(dataAccess).getVariableDao(ServicesFactory.TEMPERATURE);
+	public String getVariableId() {
+		return VariablesVoFactory.TEMPERATURE;
 	}
 
-	public void createRecord(JpaDataAccessFactory da, TemperatureVo temperature) {
-		throw new UnsupportedOperationException("Not yet implemented");
-	}
 	
 }

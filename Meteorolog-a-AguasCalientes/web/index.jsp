@@ -1,7 +1,7 @@
-<%@page import="org.meteorologaaguascalientes.businesslogic.service.ServicesFactory"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.MeasuresList"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
 <%@page import="org.meteorologaaguascalientes.dao.Dao"%>
+<%@page import="org.meteorologaaguascalientes.helper.VariablesVoFactory"%>
 <%@page import="java.util.Properties"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -98,7 +98,7 @@
                         <tr>
                             <th>&nbsp;</th>
                             <%
-                                for (String key : ServicesFactory.VARIABLES_NAMES) {
+                                for (String key : VariablesVoFactory.getVariableTypes()) {
                             %>
                             <th><%= prop.getProperty(key)%> [<%= prop.getProperty(key + ".extra")%>]</th>
                             <%}%>
@@ -109,7 +109,7 @@
                         <tr>
                             <td>Último valor</td>
                             <%
-                                for (String key : ServicesFactory.VARIABLES_NAMES) {
+                                for (String key : VariablesVoFactory.getVariableTypes()) {
                             %>
                             <td id="<%= key%>LastValue">-</td>
                             <%}%>
@@ -118,7 +118,7 @@
                         <tr>
                             <td>Nuevo valor</td>
                             <%
-                                for (String key : ServicesFactory.VARIABLES_NAMES) {
+                                for (String key : VariablesVoFactory.getVariableTypes()) {
                             %>
                             <td>        
                                 <input type="text" name="<%= key%>" required="required" />
@@ -129,7 +129,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="<%= ServicesFactory.VARIABLES_NAMES.length%>" id="message" style="text-align: right;"></td>
+                            <td colspan="<%= VariablesVoFactory.getVariableTypes().length%>" id="message" style="text-align: right;"></td>
                             <td style="text-align: right;"><input type="submit" value="Enviar"/></td>
                         </tr>
                     </tbody>
@@ -145,7 +145,7 @@
                     <form id="historyForm" action="history.jsp" method="get">
                         <div id="variable">
                             <%
-                                for (String key : ServicesFactory.VARIABLES_NAMES) {
+                                for (String key : VariablesVoFactory.getVariableTypes()) {
                             %>
                             <input type="radio" name="variable" id="variable<%= key%>" value="<%= key%>"><label for="variable<%= key%>"><%= prop.getProperty(key)%> [<%= prop.getProperty(key + ".extra")%>]</label></input>
                             <%        }
@@ -161,7 +161,7 @@
                             <tr>
                                 <th>Medida</th>
                                 <%
-                                    for (String key : ServicesFactory.VARIABLES_NAMES) {
+                                    for (String key : VariablesVoFactory.getVariableTypes()) {
                                 %>
                                 <th><%= prop.getProperty(key)%> [<%= prop.getProperty(key + ".extra")%>]</th>
                                 <%        }
@@ -184,7 +184,7 @@
                                 </td>
                         <div id="variable">
                             <%
-                                for (String key : ServicesFactory.VARIABLES_NAMES) {
+                                for (String key : VariablesVoFactory.getVariableTypes()) {
                             %>
                             <td id="<%= key%>CentralTendency">-</td>
                             <%        }
@@ -204,7 +204,7 @@
                                     </select>
                                 </td>
                                 <%
-                                    for (String key : ServicesFactory.VARIABLES_NAMES) {
+                                    for (String key : VariablesVoFactory.getVariableTypes()) {
                                 %>
                                 <td id="<%= key%>Spread">-</td>
                                 <%        }

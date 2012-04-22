@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.meteorologaaguascalientes.control.historic.HistoricControl;
+import org.meteorologaaguascalientes.businesslogic.facade.HistoricControl;
 import org.meteorologaaguascalientes.businesslogic.service.AbstractVariableService;
 import org.meteorologaaguascalientes.businesslogic.service.ServicesFactory;
 

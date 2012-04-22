@@ -4,9 +4,7 @@
  */
 package org.meteorologaaguascalientes.businesslogic.service;
 
-import org.meteorologaaguascalientes.da.DataAccessAdapter;
-import org.meteorologaaguascalientes.dao.AbstractDaoFactory;
-import org.meteorologaaguascalientes.dao.VariableDao;
+import org.meteorologaaguascalientes.helper.VariablesVoFactory;
 import org.meteorologaaguascalientes.vo.AtmosphericPressureVo;
 
 /**
@@ -16,8 +14,9 @@ import org.meteorologaaguascalientes.vo.AtmosphericPressureVo;
 public class AtmosphericPressureService extends AbstractVariableService<AtmosphericPressureVo> {
 
 	@Override
-	protected VariableDao<?, AtmosphericPressureVo> getDao(DataAccessAdapter dataAccess) {
-		return AbstractDaoFactory.getDaoFactory(dataAccess).getVariableDao(ServicesFactory.ATMOSPHERIC_PRESSURE);
+	public String getVariableId() {
+		return VariablesVoFactory.ATMOSPHERIC_PRESSURE;
 	}
+
 
 }

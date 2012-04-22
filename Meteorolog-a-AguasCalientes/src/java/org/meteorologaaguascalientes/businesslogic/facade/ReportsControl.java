@@ -1,4 +1,4 @@
-package org.meteorologaaguascalientes.control.report;
+package org.meteorologaaguascalientes.businesslogic.facade;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,9 +9,11 @@ import java.util.logging.Logger;
 import org.meteorologaaguascalientes.control.measure.Measure;
 import org.meteorologaaguascalientes.businesslogic.service.AbstractVariableService;
 import org.meteorologaaguascalientes.businesslogic.service.ServicesFactory;
+import org.meteorologaaguascalientes.da.DataAccessAdapter;
 import org.meteorologaaguascalientes.da.DataAccessException;
 import org.meteorologaaguascalientes.da.JpaDataAccess;
 import org.meteorologaaguascalientes.da.JpaDataAccessFactory;
+import org.meteorologaaguascalientes.helper.Config;
 import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
@@ -37,10 +39,10 @@ public class ReportsControl {
          * Then calculate the measure
          * and add it to the map
          */
-	JpaDataAccessFactory da = new JpaDataAccessFactory(JpaDataAccessFactory.PERSISTENCE_UNIT);
         for(String i : VariablesList.keySet()){
 			try {
-				DaoData = (ArrayList<VariableVo>) VariablesList.get(i).getAllValues(da.createDataAccess());
+				DataAccessAdapter da = Config.getInstance().getDataAccessFactory().createDataAccess();
+				DaoData = (ArrayList<VariableVo>) VariablesList.get(i).getAllValues(da);
 				result = measure.calculate(DaoData);
 				Values.put(i , result);
 			} catch (DataAccessException ex) {

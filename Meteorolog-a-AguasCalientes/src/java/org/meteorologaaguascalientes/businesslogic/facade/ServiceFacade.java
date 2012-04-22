@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import org.meteorologaaguascalientes.businesslogic.service.AbstractVariableService;
 import org.meteorologaaguascalientes.businesslogic.service.ServicesFactory;
+import org.meteorologaaguascalientes.da.DataAccessAdapter;
 import org.meteorologaaguascalientes.da.DataAccessException;
+import org.meteorologaaguascalientes.helper.Config;
 import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
@@ -17,19 +19,19 @@ import org.meteorologaaguascalientes.vo.VariableVo;
  */
 public class ServiceFacade {
 
-    public boolean insertValues(Map<String, String> data, String timestring) throws DataAccessException {
+    public boolean insertValues(Map<String, String> data, String timestring) throws DataAccessException, Exception {
         if (data == null) {
-            return false;
+            throw new Exception("Map data cannot be null");
         }
         if (timestring == null) {
-            return false;
+		throw new Exception("String timestring cannot be null");
         }
         //check for null keys or null values
         if (checkNullElements(data.keySet().toArray())) {
-            return false;
+		throw new Exception("There cannot be null keys in the Map data");
         }
         if (checkNullElements(data.values().toArray())) {
-            return false;
+		throw new Exception("There cannot be null values in the Map data");
         }
         //checking time
         Date time;
@@ -37,24 +39,22 @@ public class ServiceFacade {
             time = (new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa")).parse(timestring);
             Calendar c = Calendar.getInstance();
             c.setTime(time);
-        } catch (Exception e) {
-            return false;
+        } catch (Exception e) {	
+		throw e;
         }
         double val;
         for (Entry<String, String> entry : data.entrySet()) {
             try {
                 val = Double.parseDouble(entry.getValue());
             } catch (NumberFormatException e) {
-                return false;
+                throw new Exception("The value provided for the variable " + entry.getKey() + " was not a valid Double");
             }
-            VariableVo variableVo = new VariableVo();
+            AbstractVariableService avs = ServicesFactory.getInstance().getVariableServiceByKey(entry.getKey());
+            VariableVo variableVo = avs.getNewVo();
             variableVo.setTime(time);
             variableVo.setValue(val);
-            AbstractVariableService avs = ServicesFactory.getInstance().getVariableServiceByKey(entry.getKey());
-            if (avs == null) {
-                return false;
-            }
-            avs.createRecord(null, variableVo);
+	    DataAccessAdapter da = Config.getInstance().getDataAccessFactory().createDataAccess();
+            avs.createRecord(da , variableVo);
         }
         return true;
     }
