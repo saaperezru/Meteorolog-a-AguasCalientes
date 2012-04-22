@@ -41,7 +41,7 @@
     // Date formatting
     for (Map.Entry<String, Object> entry : lastValues.entrySet()) {
         if (entry.getValue() instanceof Date) {
-            SimpleDateFormat formatter = new SimpleDateFormat(prop.getProperty("dao." + entry.getKey() + ".extra"));
+            SimpleDateFormat formatter = new SimpleDateFormat(prop.getProperty(entry.getKey() + ".extra"));
             entry.setValue(formatter.format(entry.getValue()));
         }
         object = new JsonObject();
