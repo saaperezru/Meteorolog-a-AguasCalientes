@@ -17,7 +17,9 @@ public class DefaultForecastImpl implements Forecast {
 
     @Override
     public SortedMap<Long, Double> forecast(int numberOfPoints, SortedMap<Long, Double> actualPoints) {
-
+        
+        if(actualPoints.size()<3)
+            return null;
         double nextValue, coefficients[];
 
         RegressionResults result;

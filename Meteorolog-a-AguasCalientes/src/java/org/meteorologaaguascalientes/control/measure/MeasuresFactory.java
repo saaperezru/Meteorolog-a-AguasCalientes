@@ -12,9 +12,9 @@ import java.util.List;
  *
  * @author josebermeo
  */
-public class MeasuresList {
+public class MeasuresFactory {
 
-    private static MeasuresList measuresList = null;
+    private static MeasuresFactory measuresList = null;
     private HashMap<String, HashMap<String, Measure>> measuresMaps = null;
 
     public static final String CENTRAL_TENDENCY = "centralTendency";
@@ -27,7 +27,7 @@ public class MeasuresList {
     public static final String VARIANCE = "Variance";
     public static final String INTERCUARTILE_RANGE = "InterquartileRange";
     
-    private MeasuresList() {
+    private MeasuresFactory() {
 
         measuresMaps = new HashMap<String, HashMap<String, Measure>>();
 
@@ -48,9 +48,9 @@ public class MeasuresList {
         
     }
 
-    public static MeasuresList getInstance() {
+    public static MeasuresFactory getInstance() {
         if (measuresList == null) {
-            measuresList = new MeasuresList();
+            measuresList = new MeasuresFactory();
         }
         return measuresList;
     }
@@ -66,7 +66,7 @@ public class MeasuresList {
     }
 
     public static List<Measure> getMeasures(String typeKey) {
-        return MeasuresList.getInstance().measuresList(typeKey);
+        return MeasuresFactory.getInstance().measuresList(typeKey);
     }
 
     private List<Measure> measuresList(String typeKey) {

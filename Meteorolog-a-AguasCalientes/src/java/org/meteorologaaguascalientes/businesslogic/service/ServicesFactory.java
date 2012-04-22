@@ -23,13 +23,13 @@ public class ServicesFactory {
 		final String TEMPERATURE = VariablesVoFactory.TEMPERATURE;
 		final String PLUVIOSITY = VariablesVoFactory.PLUVIOSITY;
 
-		AbstractVariableService daoV = new PluviosityService();
+		AbstractVariableService daoV = new PluviosityService(null,null);
 		variablesService.put(PLUVIOSITY, daoV);
 
-		daoV = new TemperatureService();
+		daoV = new TemperatureService(null,null);
 		variablesService.put(TEMPERATURE, daoV);
 
-		daoV = new AtmosphericPressureService();
+		daoV = new AtmosphericPressureService(null,null);
 		variablesService.put(ATMOSPHERIC_PRESSURE, daoV);
 
 	}

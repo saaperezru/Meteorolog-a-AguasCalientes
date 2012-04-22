@@ -4,23 +4,24 @@
  */
 package org.meteorologaaguascalientes.control.measure;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
  *
  * @author josebermeo
  */
-public class Mean implements Measure{
+public class Mean implements Measure {
 
     @Override
-    public double calculate(ArrayList<VariableVo> data) {
-        if(data.isEmpty())
+    public double calculate(List<VariableVo> data) {
+        if (data.isEmpty()) {
             return java.lang.Double.NaN;
+        }
         double mean = 0;
-        for(int i = 0; i<data.size(); i++)
+        for (int i = 0; i < data.size(); i++) {
             mean += data.get(i).getValue();
-        return mean/data.size();
+        }
+        return mean / data.size();
     }
-    
 }

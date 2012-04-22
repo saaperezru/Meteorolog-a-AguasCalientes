@@ -4,6 +4,8 @@
  */
 package org.meteorologaaguascalientes.businesslogic.service;
 
+import org.meteorologaaguascalientes.control.forecast.Forecast;
+import org.meteorologaaguascalientes.control.measure.Measure;
 import org.meteorologaaguascalientes.helper.VariablesVoFactory;
 import org.meteorologaaguascalientes.vo.AtmosphericPressureVo;
 
@@ -13,10 +15,12 @@ import org.meteorologaaguascalientes.vo.AtmosphericPressureVo;
  */
 public class AtmosphericPressureService extends AbstractVariableService<AtmosphericPressureVo> {
 
-	@Override
-	public String getVariableId() {
-		return VariablesVoFactory.ATMOSPHERIC_PRESSURE;
-	}
+    public AtmosphericPressureService(Measure measure, Forecast forecast) {
+        super(measure, forecast);
+    }
 
-
+    @Override
+    public String getVariableId() {
+        return VariablesVoFactory.ATMOSPHERIC_PRESSURE;
+    }
 }

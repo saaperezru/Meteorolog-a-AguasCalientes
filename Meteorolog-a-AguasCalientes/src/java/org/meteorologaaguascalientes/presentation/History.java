@@ -3,7 +3,6 @@ package org.meteorologaaguascalientes.presentation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.Map.Entry;
 import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.meteorologaaguascalientes.businesslogic.facade.HistoricControl;
-import org.meteorologaaguascalientes.businesslogic.service.AbstractVariableService;
-import org.meteorologaaguascalientes.businesslogic.service.ServicesFactory;
+import org.meteorologaaguascalientes.control.forecast.ForecastsFactory;
 
 @WebServlet(name = "History", urlPatterns = {"/history"})
 public class History extends HttpServlet {
@@ -37,59 +35,25 @@ public class History extends HttpServlet {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             String variableName = request.getParameter("variable");
             if (variableName != null) {
-
-                for (Entry<String, AbstractVariableService> entry : ServicesFactory.getInstance().getVariablesServicesMap().entrySet()) {
-                    if (entry.getKey().equals(variableName)) {
-                        List<SortedMap<Date, Double>> dataList;
-                        SortedMap<Date, Double> data;
-
-                        HistoricControl historyControl = new HistoricControl();
-                        dataList = historyControl.getData(entry.getValue());
-
-
-
-//                        dataList = new ArrayList<SortedMap<Date, Double>>();
-//                        data = new TreeMap<Date, Double>();
-//                        Calendar c = Calendar.getInstance();
-//                        c.set(Calendar.DAY_OF_YEAR, 1);
-//                        int i = 1;
-//                        do {
-//                            data.put(c.getTime(), Math.random());
-//                            c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR) + 1);
-//                        } while (i++ <= 365);
-//                        dataList.add(data);
-//
-//                        data = new TreeMap<Date, Double>();
-//                        data.put(dataList.get(0).lastKey(), dataList.get(0).get(dataList.get(0).lastKey()));
-//                        i = 1;
-//                        do {
-//                            data.put(c.getTime(), Math.random());
-//                            c.set(Calendar.DAY_OF_YEAR, c.get(Calendar.DAY_OF_YEAR) + 1);
-//                        } while (i++ <= 10);
-//                        dataList.add(data);
-
-
-                        out.println(prop.getProperty("date") + "," + prop.getProperty("dao." + variableName) + "," + prop.getProperty("forecast"));
-
-                        data = dataList.get(0);
-                        for (Map.Entry<Date, Double> e : data.entrySet()) {
-                            out.println(formatter.format(e.getKey())
-                                    + "," + e.getValue() + ",");
-                        }
-                        if (!data.isEmpty()) {
-                            out.println(formatter.format(data.lastKey()) + ",," + data.get(data.lastKey()) + ",");
-                        }
-                        data = dataList.get(1);
-                        for (Map.Entry<Date, Double> e : data.entrySet()) {
-                            out.println(formatter.format(e.getKey())
-                                    + ",," + e.getValue());
-                        }
-
-                        return;
-                    }
+                List<SortedMap<Date, Double>> dataList;
+                SortedMap<Date, Double> data;
+                HistoricControl historyControl = new HistoricControl();
+                dataList = historyControl.getData(variableName, ForecastsFactory.DEFAULT);
+                out.println(prop.getProperty("date") + "," + prop.getProperty("dao." + variableName) + "," + prop.getProperty("forecast"));
+                data = dataList.get(0);
+                for (Map.Entry<Date, Double> e : data.entrySet()) {
+                    out.println(formatter.format(e.getKey())
+                            + "," + e.getValue() + ",");
+                }
+                if (!data.isEmpty()) {
+                    out.println(formatter.format(data.lastKey()) + ",," + data.get(data.lastKey()) + ",");
+                }
+                data = dataList.get(1);
+                for (Map.Entry<Date, Double> e : data.entrySet()) {
+                    out.println(formatter.format(e.getKey())
+                            + ",," + e.getValue());
                 }
             }
-
         } finally {
             out.close();
         }
