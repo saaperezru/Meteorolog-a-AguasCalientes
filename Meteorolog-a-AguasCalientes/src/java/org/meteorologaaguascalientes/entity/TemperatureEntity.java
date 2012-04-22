@@ -1,11 +1,17 @@
 package org.meteorologaaguascalientes.entity;
 
-import javax.persistence.Entity;
+import org.meteorologaaguascalientes.helper.VariablesVoFactory;
+import org.meteorologaaguascalientes.vo.TemperatureVo;
 
 /**
  *
  * @author jdbermeol
  */
-@Entity
-public class TemperatureEntity extends VariableMappedSuperclass {
+@javax.persistence.Entity(name = "Temperature")
+public class TemperatureEntity extends VariableMappedSuperclass<TemperatureVo> {
+
+    @Override
+    public TemperatureVo getVo() {
+        return (TemperatureVo)VariablesVoFactory.getVo(VariablesVoFactory.TEMPERATURE);
+    }
 }

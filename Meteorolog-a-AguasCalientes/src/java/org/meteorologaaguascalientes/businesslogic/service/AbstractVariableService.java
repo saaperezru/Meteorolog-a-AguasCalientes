@@ -18,22 +18,22 @@ import org.meteorologaaguascalientes.vo.VariableVo;
  */
 public abstract class AbstractVariableService<E extends VariableVo> extends AbstractService<E> {
 
-	public E getLastValue(DataAccessAdapter dataAccess) throws DataAccessException {
-		return getDao(dataAccess).getLastValue(dataAccess);
-	}
+    public E getLastValue(DataAccessAdapter dataAccess) throws DataAccessException {
+        return getDao(dataAccess).getLastValue(dataAccess);
+    }
 
-	public List<E> getAllValues(DataAccessAdapter dataAccess) throws DataAccessException {
-		return getDao(dataAccess).getAllValues(dataAccess);
-	}
+    public List<E> getAllValues(DataAccessAdapter dataAccess) throws DataAccessException {
+        return getDao(dataAccess).getAllValues(dataAccess);
+    }
 
-	protected VariableDao<?, E> getDao(DataAccessAdapter dataAccess){
-		return AbstractDaoFactory.getDaoFactory(dataAccess).getVariableDao(getVariableId());
-	}
+    @Override
+    protected VariableDao<?, E> getDao(DataAccessAdapter dataAccess) {
+        return AbstractDaoFactory.getDaoFactory(dataAccess).getVariableDao(getVariableId());
+    }
 
-	public VariableVo getNewVo(){
-		return VariablesVoFactory.getVo(getVariableId());
-	}
+    public VariableVo getNewVo() {
+        return VariablesVoFactory.getVo(getVariableId());
+    }
 
-	public abstract String getVariableId();
-
+    public abstract String getVariableId();
 }
