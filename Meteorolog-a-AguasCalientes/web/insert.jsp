@@ -1,6 +1,5 @@
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
-<%@page import="org.meteorologaaguascalientes.businesslogic.facade.HistoricControl"%>
 <%@page import="org.meteorologaaguascalientes.helper.VariablesVoFactory"%>
 <%@page import="org.meteorologaaguascalientes.businesslogic.facade.ServiceFacade"%>
 <%@page import="org.meteorologaaguascalientes.businesslogic.service.ServicesFactory"%>
@@ -29,7 +28,7 @@
 		object.addProperty("success", success);
 
 	} catch (Exception e) {
-		Logger.getLogger(HistoricControl.class.getName()).log(Level.SEVERE, null, e);
+		Logger.getLogger(ServiceFacade.class.getName()).log(Level.SEVERE, null, e);
 	}
 %>
 <% // InsertControl invocation

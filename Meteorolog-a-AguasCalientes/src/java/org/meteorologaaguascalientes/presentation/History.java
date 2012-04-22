@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.meteorologaaguascalientes.businesslogic.facade.HistoricControl;
+import org.meteorologaaguascalientes.businesslogic.facade.ServiceFacade;
 import org.meteorologaaguascalientes.control.forecast.ForecastsFactory;
 
 @WebServlet(name = "History", urlPatterns = {"/history"})
@@ -37,8 +37,8 @@ public class History extends HttpServlet {
             if (variableName != null) {
                 List<SortedMap<Date, Double>> dataList;
                 SortedMap<Date, Double> data;
-                HistoricControl historyControl = new HistoricControl();
-                dataList = historyControl.getData(variableName, ForecastsFactory.DEFAULT);
+                ServiceFacade serviceFacade = new ServiceFacade();
+                dataList = serviceFacade.getData(variableName, ForecastsFactory.DEFAULT);
                 out.println(prop.getProperty("date") + "," + prop.getProperty("dao." + variableName) + "," + prop.getProperty("forecast"));
                 data = dataList.get(0);
                 for (Map.Entry<Date, Double> e : data.entrySet()) {

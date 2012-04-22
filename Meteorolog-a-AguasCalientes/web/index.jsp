@@ -1,4 +1,4 @@
-<%@page import="org.meteorologaaguascalientes.control.measure.MeasuresList"%>
+<%@page import="org.meteorologaaguascalientes.control.measure.MeasuresFactory"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
 <%@page import="org.meteorologaaguascalientes.dao.Dao"%>
 <%@page import="org.meteorologaaguascalientes.helper.VariablesVoFactory"%>
@@ -36,20 +36,20 @@
                     }
                 });
                 jQuery("#variable input[type=radio]:first").click();
-//                jQuery("#centralTendency").change(function(){
-//                    getReport(jQuery(this), "CentralTendency");
-//                });
-//                jQuery("#spread").change(function(){
-//                    getReport(jQuery(this), "Spread");
-//                });
+                //                jQuery("#centralTendency").change(function(){
+                //                    getReport(jQuery(this), "CentralTendency");
+                //                });
+                //                jQuery("#spread").change(function(){
+                //                    getReport(jQuery(this), "Spread");
+                //                });
                 
             <%
-                for (String typeKey : MeasuresList.getInstance().getMeasuresTypes()) {
+                for (String typeKey : MeasuresFactory.getInstance().getMeasuresTypes()) {
             %>
                     
-                jQuery("#<%=typeKey%>").change(function(){
-                    getReport(jQuery(this), "<%=typeKey.replaceFirst(typeKey.substring(0, 1), typeKey.substring(0, 1).toUpperCase())%>");
-                });    
+                    jQuery("#<%=typeKey%>").change(function(){
+                        getReport(jQuery(this), "<%=typeKey.replaceFirst(typeKey.substring(0, 1), typeKey.substring(0, 1).toUpperCase())%>");
+                    });    
                     
             <%                        }
             %>
@@ -182,14 +182,14 @@
                         </thead>
                         <tbody>
                             <%
-                                for (String typeKey : MeasuresList.getInstance().getMeasuresTypes()) {
+                                for (String typeKey : MeasuresFactory.getInstance().getMeasuresTypes()) {
                             %>
                             <tr>
                                 <td>
                                     <select id="<%= typeKey%>">
                                         <option value=""></option>
                                         <%
-                                            for (String key : MeasuresList.getInstance().getMeasuresKeys(typeKey)) {
+                                            for (String key : MeasuresFactory.getInstance().getMeasuresKeys(typeKey)) {
                                         %>
                                         <option value="<%=key%>"><%= prop.getProperty("measure." + key)%></option>
                                         <%
