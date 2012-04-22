@@ -30,7 +30,7 @@ public class JpaDaoPluviosity extends JpaDaoVariable<PluviosityVo, PluviosityEnt
     public PluviosityVo getLastValue(DataAccessAdapter<EntityManager> adapter) throws DataAccessException {
         List<PluviosityVo> list = getLastNValues(adapter, 1);
         if (list.isEmpty()) {
-            throw new NoResultException("Empty Pluviosity table");
+            return null;
         }
         return list.get(0);
     }

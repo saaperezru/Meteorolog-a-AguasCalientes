@@ -30,7 +30,7 @@ public class JpaDaoTemperature extends JpaDaoVariable<TemperatureVo, Temperature
     public TemperatureVo getLastValue(DataAccessAdapter<EntityManager> adapter) throws DataAccessException {
         List<TemperatureVo> list = getLastNValues(adapter, 1);
         if (list.isEmpty()) {
-            throw new NoResultException("Empty Pluviosity table");
+            return null;
         }
         return list.get(0);
     }

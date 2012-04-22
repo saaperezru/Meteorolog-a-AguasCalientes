@@ -30,7 +30,7 @@ public class JpaDaoAtmosphericPressure extends JpaDaoVariable<AtmosphericPressur
     public AtmosphericPressureVo getLastValue(DataAccessAdapter<EntityManager> adapter) throws DataAccessException {
         List<AtmosphericPressureVo> list = getLastNValues(adapter, 1);
         if (list.isEmpty()) {
-            throw new NoResultException("Empty AtmosphericPressure table");
+            return null;
         }
         return list.get(0);
     }
