@@ -9,7 +9,7 @@ public interface VariableDao<E, F extends ValueObject> extends Dao<E, F> {
 
 	public F getLastValue(DataAccessAdapter<E> adapter) throws DataAccessException;
 
-	public F getLastNValues(DataAccessAdapter<E> adapter, int n) throws DataAccessException;
+	public List<F> getLastNValues(DataAccessAdapter<E> adapter, int n) throws DataAccessException;
 
 	public List<F> getAllValues(DataAccessAdapter<E> adapter) throws DataAccessException;
 ;

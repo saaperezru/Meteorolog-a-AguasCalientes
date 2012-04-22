@@ -4,13 +4,7 @@ import java.util.HashMap;
 import org.meteorologaaguascalientes.da.JpaDataAccess;
 import org.meteorologaaguascalientes.dao.AbstractDaoFactory;
 import org.meteorologaaguascalientes.dao.VariableDao;
-import org.meteorologaaguascalientes.entity.AtmosphericPressureEntity;
-import org.meteorologaaguascalientes.entity.PluviosityEntity;
-import org.meteorologaaguascalientes.entity.TemperatureEntity;
 import org.meteorologaaguascalientes.helper.VariablesVoFactory;
-import org.meteorologaaguascalientes.vo.AtmosphericPressureVo;
-import org.meteorologaaguascalientes.vo.PluviosityVo;
-import org.meteorologaaguascalientes.vo.TemperatureVo;
 
 public class JpaDaoFactory extends AbstractDaoFactory<JpaDataAccess> {
 
@@ -18,9 +12,9 @@ public class JpaDaoFactory extends AbstractDaoFactory<JpaDataAccess> {
 	private HashMap<String, VariableDao> variableDaos = new HashMap<String, VariableDao>();
 
 	private JpaDaoFactory() {
-		variableDaos.put(VariablesVoFactory.ATMOSPHERIC_PRESSURE, new JpaDaoVariable<AtmosphericPressureVo,AtmosphericPressureEntity>());
-		variableDaos.put(VariablesVoFactory.PLUVIOSITY, new JpaDaoVariable<PluviosityVo,PluviosityEntity>());
-		variableDaos.put(VariablesVoFactory.TEMPERATURE, new JpaDaoVariable<TemperatureVo,TemperatureEntity>());
+		variableDaos.put(VariablesVoFactory.ATMOSPHERIC_PRESSURE, new JpaDaoAtmosphericPressure());
+		variableDaos.put(VariablesVoFactory.PLUVIOSITY, new JpaDaoPluviosity());
+		variableDaos.put(VariablesVoFactory.TEMPERATURE, new JpaDaoTemperature());
 	}
 
 	public static JpaDaoFactory getInstance() {
