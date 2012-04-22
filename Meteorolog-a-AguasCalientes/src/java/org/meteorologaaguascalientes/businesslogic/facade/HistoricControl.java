@@ -7,8 +7,8 @@ package org.meteorologaaguascalientes.businesslogic.facade;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.meteorologaaguascalientes.control.forecast.DefaultForecastImpl;
 import org.meteorologaaguascalientes.businesslogic.service.AbstractVariableService;
+import org.meteorologaaguascalientes.control.forecast.ForecastsFactory;
 import org.meteorologaaguascalientes.da.DataAccessAdapter;
 import org.meteorologaaguascalientes.da.DataAccessException;
 import org.meteorologaaguascalientes.helper.Config;
@@ -42,7 +42,8 @@ public class HistoricControl {
 					timeSpacedActualValues.put(d.getTime() - firstSampleTime, actualValues.get(d));
 				}
 				if (actualValues.size() > 2) {
-					timeSpacedForecast = new DefaultForecastImpl().forecast(10, timeSpacedActualValues);
+                                    
+					timeSpacedForecast = ForecastsFactory.getInstance().getForecastById(ForecastsFactory.DEFAULT).forecast(10, timeSpacedActualValues);
 					for (Long l : timeSpacedForecast.keySet()) {
 						forecast.put(new Date(l + firstSampleTime), timeSpacedForecast.get(l));
 					}

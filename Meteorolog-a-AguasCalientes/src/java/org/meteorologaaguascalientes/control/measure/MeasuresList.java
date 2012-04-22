@@ -17,29 +17,34 @@ public class MeasuresList {
     private static MeasuresList measuresList = null;
     private HashMap<String, HashMap<String, Measure>> measuresMaps = null;
 
+    public static final String CENTRAL_TENDENCY = "centralTendency";
+    public static final String SPREAD = "spread";
+    
+    public static final String MEAN = "Mean";
+    public static final String MEDIAN = "Median";
+    public static final String MODE = "Mode";
+    public static final String STANDARD_DEVIATION = "StandardDeviation";
+    public static final String VARIANCE = "Variance";
+    public static final String INTERCUARTILE_RANGE = "InterquartileRange";
+    
     private MeasuresList() {
 
         measuresMaps = new HashMap<String, HashMap<String, Measure>>();
 
         HashMap<String, Measure> centralTendency = new HashMap();
-        Mean mean = new Mean();
-        centralTendency.put(mean.getClass().getSimpleName(), mean);
-        Median median = new Median();
-        centralTendency.put(median.getClass().getSimpleName(), median);
-        Mode mode = new Mode();
-        centralTendency.put(mode.getClass().getSimpleName(), mode);
+        
+        centralTendency.put(MEAN, new Mean());
+        centralTendency.put(MEDIAN, new Median());
+        centralTendency.put(MODE, new Mode());
 
-        measuresMaps.put("centralTendency", centralTendency);
+        measuresMaps.put(CENTRAL_TENDENCY, centralTendency);
 
         HashMap<String, Measure> spread = new HashMap();
-        Variance variance = new Variance();
-        spread.put(variance.getClass().getSimpleName(), variance);
-        StandardDeviation standardDeviation = new StandardDeviation();
-        spread.put(standardDeviation.getClass().getSimpleName(), standardDeviation);
-        InterquartileRange interquartileRange = new InterquartileRange();
-        spread.put(interquartileRange.getClass().getSimpleName(), interquartileRange);
+        spread.put(VARIANCE, new Variance());
+        spread.put(STANDARD_DEVIATION, new StandardDeviation());
+        spread.put(INTERCUARTILE_RANGE, new InterquartileRange());
 
-        measuresMaps.put("spread", spread);
+        measuresMaps.put(SPREAD, spread);
         
     }
 
