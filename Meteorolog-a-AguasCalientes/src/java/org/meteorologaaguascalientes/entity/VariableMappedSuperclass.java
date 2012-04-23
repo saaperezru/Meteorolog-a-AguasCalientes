@@ -10,7 +10,7 @@ import org.meteorologaaguascalientes.vo.VariableVo;
 
 /**
  *
- * @author Administrator
+ * @author jdbermeol
  */
 @MappedSuperclass
 public abstract class VariableMappedSuperclass<E extends VariableVo> implements Serializable, Entity<E> {
@@ -80,6 +80,6 @@ public abstract class VariableMappedSuperclass<E extends VariableVo> implements 
         e.setValue(this.getValue());
         return e;
     }
-    
+
     public abstract E getVo();
 }

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.meteorologaaguascalientes.businesslogic.service;
 
 import org.meteorologaaguascalientes.control.forecast.Forecast;
@@ -22,5 +18,15 @@ public class TemperatureService extends AbstractVariableService<TemperatureVo> {
     @Override
     public String getVariableId() {
         return VariablesVoFactory.TEMPERATURE;
+    }
+
+    @Override
+    public void checkVo(TemperatureVo vo) throws IllegalArgumentException {
+        if(vo == null){
+            throw new IllegalArgumentException("TemperatureVo cannot be null");
+        }
+        if(vo.getValue()< -273.15){
+            throw new IllegalArgumentException("Temperature cannot be less than -273.15 C");
+        }
     }
 }

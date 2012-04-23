@@ -1,10 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.meteorologaaguascalientes.control.measure;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.meteorologaaguascalientes.vo.VariableVo;
 

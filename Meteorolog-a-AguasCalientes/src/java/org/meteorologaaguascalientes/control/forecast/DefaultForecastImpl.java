@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.meteorologaaguascalientes.control.forecast;
 
 import java.util.SortedMap;
@@ -17,13 +13,15 @@ public class DefaultForecastImpl implements Forecast {
 
     @Override
     public SortedMap<Long, Double> forecast(int numberOfPoints, SortedMap<Long, Double> actualPoints) {
-        
-        if(actualPoints.size()<3)
-            return null;
+
+        SortedMap<Long, Double> forecast = new TreeMap<Long, Double>();
+        if (actualPoints.size() < 3) {
+            return forecast;
+        }
         double nextValue, coefficients[];
 
         RegressionResults result;
-        SortedMap<Long, Double> forecast = new TreeMap<Long, Double>();
+
         SimpleRegression regression = new SimpleRegression();
 
         Long timeDelta = (actualPoints.lastKey() - actualPoints.firstKey()) / (actualPoints.size() - 1);

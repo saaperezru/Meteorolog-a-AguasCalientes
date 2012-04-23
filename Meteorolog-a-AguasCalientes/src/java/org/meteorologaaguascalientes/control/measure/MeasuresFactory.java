@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.meteorologaaguascalientes.control.measure;
 
 import java.util.ArrayList;
@@ -16,23 +12,21 @@ public class MeasuresFactory {
 
     private static MeasuresFactory measuresList = null;
     private HashMap<String, HashMap<String, Measure>> measuresMaps = null;
-
     public static final String CENTRAL_TENDENCY = "centralTendency";
     public static final String SPREAD = "spread";
-    
     public static final String MEAN = "Mean";
     public static final String MEDIAN = "Median";
     public static final String MODE = "Mode";
     public static final String STANDARD_DEVIATION = "StandardDeviation";
     public static final String VARIANCE = "Variance";
     public static final String INTERCUARTILE_RANGE = "InterquartileRange";
-    
+
     private MeasuresFactory() {
 
         measuresMaps = new HashMap<String, HashMap<String, Measure>>();
 
         HashMap<String, Measure> centralTendency = new HashMap();
-        
+
         centralTendency.put(MEAN, new Mean());
         centralTendency.put(MEDIAN, new Median());
         centralTendency.put(MODE, new Mode());
@@ -45,7 +39,7 @@ public class MeasuresFactory {
         spread.put(INTERCUARTILE_RANGE, new InterquartileRange());
 
         measuresMaps.put(SPREAD, spread);
-        
+
     }
 
     public static MeasuresFactory getInstance() {
@@ -81,15 +75,15 @@ public class MeasuresFactory {
         }
         return list;
     }
-    
-    public ArrayList<String> getMeasuresTypes(){
-        
+
+    public ArrayList<String> getMeasuresTypes() {
+
         ArrayList<String> list = new ArrayList<String>();
-        
-        for (Object type:measuresMaps.keySet().toArray()){
-            list.add((String)type);
+
+        for (Object type : measuresMaps.keySet().toArray()) {
+            list.add((String) type);
         }
-        
+
         return list;
     }
 }

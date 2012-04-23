@@ -4,7 +4,7 @@ import org.meteorologaaguascalientes.da.DataAccessAdapter;
 import org.meteorologaaguascalientes.da.DataAccessException;
 import org.meteorologaaguascalientes.vo.ValueObject;
 
-public interface Dao<E, F extends ValueObject> {
+public interface CrudDao<E, F extends ValueObject> {
 
     public F insert(DataAccessAdapter<E> adapter, F vo) throws DataAccessException;
 

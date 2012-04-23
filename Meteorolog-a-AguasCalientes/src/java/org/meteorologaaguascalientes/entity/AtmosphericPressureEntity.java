@@ -12,6 +12,6 @@ public class AtmosphericPressureEntity extends VariableMappedSuperclass<Atmosphe
 
     @Override
     public AtmosphericPressureVo getVo() {
-        return (AtmosphericPressureVo)VariablesVoFactory.getVo(VariablesVoFactory.ATMOSPHERIC_PRESSURE);
+        return (AtmosphericPressureVo) VariablesVoFactory.getVo(VariablesVoFactory.ATMOSPHERIC_PRESSURE);
     }
 }

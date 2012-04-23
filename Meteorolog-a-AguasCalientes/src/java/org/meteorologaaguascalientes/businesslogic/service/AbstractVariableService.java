@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.meteorologaaguascalientes.businesslogic.service;
 
 import java.util.*;
@@ -18,7 +14,7 @@ import org.meteorologaaguascalientes.vo.VariableVo;
  *
  * @author tuareg
  */
-public abstract class AbstractVariableService<E extends VariableVo> extends AbstractService<E> {
+public abstract class AbstractVariableService<E extends VariableVo> {
 
     Measure measure;
     Forecast forecast;
@@ -36,6 +32,23 @@ public abstract class AbstractVariableService<E extends VariableVo> extends Abst
         this.measure = measure;
     }
 
+    public abstract void checkVo(E vo) throws IllegalArgumentException;
+
+    public abstract String getVariableId();
+
+    private VariableDao<?, E> getDao(DataAccessAdapter dataAccess) {
+        return AbstractDaoFactory.getDaoFactory(dataAccess).getVariableDao(getVariableId());
+    }
+
+    public VariableVo getNewVo() {
+        return VariablesVoFactory.getVo(getVariableId());
+    }
+
+    public E createRecord(DataAccessAdapter dataAccess, E record) throws DataAccessException,IllegalArgumentException {
+        checkVo(record);
+        return getDao(dataAccess).insert(dataAccess, record);
+    }
+
     public E getLastValue(DataAccessAdapter dataAccess) throws DataAccessException {
         return getDao(dataAccess).getLastValue(dataAccess);
     }
@@ -44,53 +57,47 @@ public abstract class AbstractVariableService<E extends VariableVo> extends Abst
         return getDao(dataAccess).getAllValues(dataAccess);
     }
 
-    @Override
-    protected VariableDao<?, E> getDao(DataAccessAdapter dataAccess) {
-        return AbstractDaoFactory.getDaoFactory(dataAccess).getVariableDao(getVariableId());
-    }
-
-    public VariableVo getNewVo() {
-        return VariablesVoFactory.getVo(getVariableId());
-    }
-
-    public abstract String getVariableId();
-
-    public double getReport(DataAccessAdapter dataAccess) throws DataAccessException {
+    public double getReport(DataAccessAdapter dataAccess) throws DataAccessException, NullPointerException {
         if (measure == null) {
             throw new NullPointerException("Measure cannot be Null");
         }
         return measure.calculate((List<VariableVo>) getAllValues(dataAccess));
     }
 
-    public List<SortedMap<Date, Double>> getData(DataAccessAdapter dataAccess) throws DataAccessException, NoSuchElementException {
+    public List<SortedMap<Date, Double>> getDataAndPrediction(DataAccessAdapter dataAccess)
+            throws DataAccessException, NoSuchElementException, NullPointerException {
 
-        List<SortedMap<Date, Double>> data = new ArrayList<SortedMap<Date, Double>>();
-        SortedMap<Date, Double> actualValues = new TreeMap<Date, Double>();
-        SortedMap<Date, Double> prediction = new TreeMap<Date, Double>();
-        SortedMap<Long, Double> timeSpacedActualValues = new TreeMap<Long, Double>();
-        SortedMap<Long, Double> timeSpacedForecast;
-
-        data.add(actualValues);
+        if (forecast == null) {
+            throw new NullPointerException("Forecast cannot be Null");
+        }
         ArrayList<VariableVo> variables = (ArrayList<VariableVo>) getAllValues(dataAccess);
-
+        List<SortedMap<Date, Double>> data = new ArrayList<SortedMap<Date, Double>>();
+        if(variables.isEmpty()){
+            return data;
+        }
+        
+        SortedMap<Date, Double> actualValues = new TreeMap<Date, Double>();
+        data.add(actualValues);
         for (VariableVo v : variables) {
             actualValues.put(v.getTime(), v.getValue());
         }
-
+        
+        SortedMap<Long, Double> timeSpacedActualValues = new TreeMap<Long, Double>();
         Long firstSampleTime = actualValues.firstKey().getTime();
         for (Date d : actualValues.keySet()) {
             timeSpacedActualValues.put(d.getTime() - firstSampleTime, actualValues.get(d));
         }
+        
+        SortedMap<Long, Double> timeSpacedForecast;
         timeSpacedForecast = forecast.forecast(10, timeSpacedActualValues);
+        
+        SortedMap<Date, Double> prediction = new TreeMap<Date, Double>();
         if (timeSpacedForecast != null) {
             for (Long l : timeSpacedForecast.keySet()) {
                 prediction.put(new Date(l + firstSampleTime), timeSpacedForecast.get(l));
             }
         }
-
-
         data.add(prediction);
-
         return data;
     }
 }

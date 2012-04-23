@@ -55,7 +55,15 @@ public class ServiceFacade {
             VariableVo variableVo = avs.getNewVo();
             variableVo.setTime(time);
             variableVo.setValue(val);
-            avs.createRecord(da, variableVo);
+            try {
+                avs.createRecord(da, variableVo);
+            }catch (DataAccessException ex) {
+                Logger.getLogger(ServiceFacade.class.getName()).log(Level.SEVERE, null, ex);
+                throw ex;
+            }catch (IllegalArgumentException ex) {
+                Logger.getLogger(ServiceFacade.class.getName()).log(Level.SEVERE, null, ex);
+                throw ex;
+            }
         }
         da.commit();
         da.close();
@@ -88,7 +96,7 @@ public class ServiceFacade {
         List<SortedMap<Date, Double>> data = new ArrayList<SortedMap<Date, Double>>();
         try {
             DataAccessAdapter da = Config.getInstance().getDataAccessFactory().createDataAccess();
-            data = ServicesFactory.getInstance().getVariableServiceByKey(variable).getData(da);
+            data = ServicesFactory.getInstance().getVariableServiceByKey(variable).getDataAndPrediction(da);
         } catch (DataAccessException ex) {
             Logger.getLogger(ServiceFacade.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchElementException ex) {

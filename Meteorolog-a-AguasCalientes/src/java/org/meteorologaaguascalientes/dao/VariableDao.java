@@ -5,7 +5,7 @@ import org.meteorologaaguascalientes.da.DataAccessAdapter;
 import org.meteorologaaguascalientes.da.DataAccessException;
 import org.meteorologaaguascalientes.vo.ValueObject;
 
-public interface VariableDao<E, F extends ValueObject> extends Dao<E, F> {
+public interface VariableDao<E, F extends ValueObject> extends CrudDao<E, F> {
 
 	public F getLastValue(DataAccessAdapter<E> adapter) throws DataAccessException;
 
