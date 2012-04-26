@@ -1,6 +1,6 @@
-<%@page import="org.meteorologaaguascalientes.control.measure.MeasuresFactory"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
-<%@page import="org.meteorologaaguascalientes.dao.Dao"%>
+<%@page import="org.meteorologaaguascalientes.control.measure.MeasuresFactory"%>
+<%@page import="org.meteorologaaguascalientes.dao.CrudDao"%>
 <%@page import="org.meteorologaaguascalientes.helper.VariablesVoFactory"%>
 <%@page import="java.util.Properties"%>
 <%@page import="java.util.List"%>

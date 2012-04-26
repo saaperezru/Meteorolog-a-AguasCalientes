@@ -39,7 +39,7 @@ public class History extends HttpServlet {
                 SortedMap<Date, Double> data;
                 ServiceFacade serviceFacade = new ServiceFacade();
                 dataList = serviceFacade.getData(variableName, ForecastsFactory.DEFAULT);
-                out.println(prop.getProperty("date") + "," + prop.getProperty("dao." + variableName) + "," + prop.getProperty("forecast"));
+                out.println(prop.getProperty("date") + "," + prop.getProperty( variableName) + "," + prop.getProperty("forecast"));
                 data = dataList.get(0);
                 for (Map.Entry<Date, Double> e : data.entrySet()) {
                     out.println(formatter.format(e.getKey())

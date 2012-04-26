@@ -1,10 +1,10 @@
-<%@page import="org.meteorologaaguascalientes.businesslogic.facade.ServiceFacade"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.MeasuresFactory"%>
 <%@page import="com.google.gson.JsonObject"%>
+<%@page import="org.meteorologaaguascalientes.businesslogic.facade.ServiceFacade"%>
 <%@page import="com.google.gson.JsonArray"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="org.meteorologaaguascalientes.control.measure.Measure"%>
-<%@page import="org.meteorologaaguascalientes.dao.Dao"%>
+<%@page import="org.meteorologaaguascalientes.dao.CrudDao"%>
 <%@page import="java.util.*"%>
 <%@page contentType="text/json" pageEncoding="UTF-8"%>
 <%!    Map<String, Double> report;
